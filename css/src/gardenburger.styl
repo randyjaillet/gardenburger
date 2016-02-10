@@ -1,4 +1,4 @@
-.gardenburger_nav
+body > header > nav
 
 	//////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////
@@ -194,17 +194,9 @@
 			&.menuToggle
 				float right
 
-				a
-					padding-right 33px
-
-					&:after
-						position absolute
-						top 50%
-						right 13px
-						margin -2px 0 0 5px
-						display inline-block
-						content '\2261'
-						font 900 1.5em/.1em Helvetica,sans-serif
+				svg
+					display block
+					size 18px
 
 
 
@@ -323,6 +315,10 @@
 	//////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////
 
+
+	// Antialiasing shift on transforms 	//////////////////////////
+	
+	-webkit-font-smoothing subpixel-antialiased
 
 	// Menu visibility 	//////////////////////////////////////////////
 

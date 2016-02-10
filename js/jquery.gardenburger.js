@@ -1,42 +1,27 @@
-/*	RJ 3.28.2014
-**
-**	GardenBurger is a gracefully degrading, mobile-
-**	first navigation jQuery plugin.
-**	It turns undordered lists into navigation
-**	with dynamic dropdowns and flyouts. These
-**	menus are all keyboard accessible.
-**	GardenBurger is mobile friendly and will
-**	transmogrify in mobile mode (at < 800px
-**	by default) into a set of stacked,
-**	indented lists that are hidden beneath a
-**	"garden burger" icon.
-**	Buttons are injected in mobile mode for
-**	expanding and collapsing menus, as the
-**	"hover" event can't be relied upon in
-**	touch screen environments.
-**
-**	GardenBurger relies heavily on advanced CSS
-**	techniques such as transitions that are
-**	chained using delays. In IE8, these
-**	animated effects won't show, but
-**	GardenBurger will still function. In <= IE7,
-**	forgetaboutit.
-**
+/*
+** A gracefully degrading, mobile-first navigation jQuery plugin.
+** 
+** Gardenburger turns navigation lists into dynamic dropdowns and
+** flyouts. These menus are all keyboard accessible. Gardenburger
+** is mobile friendly and will transmogrify in mobile mode (at
+** < 800px by default) into a set of stacked, indented lists that
+** are hidden beneath a "hamburger" icon. Buttons are injected in
+** mobile mode for expanding and collapsing menus, as the "hover"
+** event can't be relied upon in touch screen environments.
 */
 
 $.fn.gardenburger = function(options){  
 
     var defaultOptions = {
+	    submenuClass		: "hasChildMenu", // Class applied to LIs containing submenus
     	navJSClass 			: "yesJS", // Class that gets applied to the nav's parent for styling based on presence of JS.
     	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>" // The HTML that is injected to function as submenu toggler buttons in mobile mode. Uses buttons by default instead of As to lessen the likelihood of styling conflicts.
     };
     var settings = $.extend({}, defaultOptions, options);
- 
+
     return this.each(function() {
 
-    	var $context = $(this);
-
-		$context
+		$(this)
 
 
 				// Label the context for styling based
@@ -51,109 +36,142 @@ $.fn.gardenburger = function(options){
 				// instead. Also, trigger a custom event
 				// for the JS side of things.
 
-    			.on("focus", "li", function(e){
-					$(this).addClass("focus");
-					$(this).trigger("bubblyfocus");
-				})
-    			.on("blur", "li", function(e){
-					$(this).removeClass("focus");
-				})
+    			.on(
+	    			"focus",
+	    			"li",
+	    			function (e) {
+						$(e.target).addClass("focus");
+						$(e.target).trigger("bubblyfocus");
+					}
+				)
+    			.on(
+	    			"blur",
+	    			"li",
+	    			function(e){
+						$(e.target).removeClass("focus");
+					}
+				)
 
 
-				// Since CSS doesn't have a parent
-				// selector, apply a class to LIs
-				// that contain submenus.
+				// Since a parent selector (:has()?) in CSS
+				// is currently a distant fantasy, apply a
+				// class to LIs that contain submenus.
 
 				.find("li:has(ul)")
-						.addClass("hasChildMenu")
-						.end() // Back to $context
+						.addClass(settings.submenuClass)
+						.end() // Back to context
 
+
+				// Start off with the nav hidden in mobile
+				// mode.
 
 				.children("ul:not(.mobileNav)")
 						.addClass("hidden")
-						.end() // Back to $context
+						.end() // Back to context
 
 
 				// Apply click event handling to the mobile
 				// menu button to handle visibility of
 				// navigation.
 
-				.on("click", ".menuToggle a", function(e){
-					e.preventDefault();
-					$context.children("ul").not(".mobileNav")
-							.toggleClass("hidden");
-				})
+				.on(
+					"click",
+					".menuToggle a",
+					function (e) {
+						e.preventDefault();
+						$(this).children("ul:not(.mobileNav)")
+								.toggleClass("hidden");
+					}
+				)
 
 
 				// Inject togglers for hiding/showing sub
-				// menus in mobile mode.
+				// menus in mobile mode and attach their
+				// event handlers.
 
 				.find("li.hasChildMenu")
-						.each(function(ind,obj){
-				    		$(obj).children("a").after(settings.injectedTogglerHTML);
-				    	})
-				    	.end() // Back to $context
+						.each(
+							function (i, el) {
+				    			$(this).children("a").after(settings.injectedTogglerHTML);
+				    		}
+				    	)
+				    	.end() // Back to context
 
-
-				// Apply click event handling to the injected
-				// togglers to handle hiding/showing of child
-				// menus in mobile mode.
-
-				.on("click", ".submenuTogglers", function(e){
-					e.preventDefault();
-					$(this).closest("li")
-							.toggleClass("open");
-				})
+				.on(
+					"click",
+					".submenuTogglers",
+					function(e){
+						e.preventDefault();
+						$(e.target).closest("li")
+								.toggleClass("open");
+					}
+				)
 		;
 
-		$(document).ready(function(){
+		$(
+			function(){
 
-			window.setTimeout(function(){calculateMenuPositioning();}, 250);
-			
+				window.setTimeout(calculateMenuPositioning, 250);
 
-			$(window).on("resize", function(){
-				calculateMenuPositioning();
-			});
+				$(window).on("resize", calculateMenuPositioning);
 
-		});
+			}
+		);
 
 		function calculateMenuPositioning() {
 
-			$context
+			$(this)
+					// Reset previously flipped menus.
 					.find("ul")
 							.removeClass("flip")
 							.end()
+					// Remove previously injected positioning wrappers.
 					.find(".menuPositioningWrapper > ul")
 							.unwrap()
 							.end()
+					// Go through second-level menus and figure out their
+					// positioning first, since it's a little different
+					// (they get nudged to the sides by the needed number
+					// of pixels to keep them fully on-screen) and
+					// because lower menus' positions depend on how we
+					// adjust these higher ones'.
+					// We're storing the horizontal position at which
+					// menus would be if they were visible in the
+					// "visiblePosX" key on the jQuery data() method for
+					// each menu.
 					.find("ul:not(.mobileNav):first > li > ul, ul:not(.mobileNav):first > li > .menuPositioningWrapper > ul")
-							.each(function(){
-								var neededOffsetRight,
-									siblingLinkOffsetLeft
-								;
-
-								if ($(this).closest(".menuPositioningWrapper").length) {
-									siblingLinkOffsetLeft = $(this).closest(".menuPositioningWrapper").prevAll("a").offset().left;
-								} else {
-									siblingLinkOffsetLeft = $(this).prevAll("a").offset().left;
-								}
-
-								$(this).data("visiblePosX", siblingLinkOffsetLeft);
-
-								neededOffsetRight = $(this).data("visiblePosX") + $(this).outerWidth() - $(window).width();
-
-								if (neededOffsetRight > 0) {
-
-									$(this)
-											.wrap("<div class=\"menuPositioningWrapper\"></div>")
-											.closest(".menuPositioningWrapper")
-													.css({ "transform" : "translateX(-" + neededOffsetRight + "px)" })
-													.end() // back to $(this) menu
-											.data("visiblePosX", siblingLinkOffsetLeft - neededOffsetRight);
+							.each(
+								function () {
+									var neededOffsetRight,
+										siblingLinkOffsetLeft
 									;
+	
+									if ($(this).closest(".menuPositioningWrapper").length) {
+										siblingLinkOffsetLeft = $(this).closest(".menuPositioningWrapper").prevAll("a").offset().left;
+									} else {
+										siblingLinkOffsetLeft = $(this).prevAll("a").offset().left;
+									}
+	
+									$(this).data("visiblePosX", siblingLinkOffsetLeft);
+	
+									neededOffsetRight = $(this).data("visiblePosX") + $(this).outerWidth() - $(window).width();
+	
+									if (neededOffsetRight > 0) {
+	
+										$(this)
+												.wrap("<div class=\"menuPositioningWrapper\"></div>")
+												.closest(".menuPositioningWrapper")
+														.css({ "transform" : "translateX(-" + neededOffsetRight + "px)" })
+														.end() // back to $(this) menu
+												.data("visiblePosX", siblingLinkOffsetLeft - neededOffsetRight);
+										;
+									}
+	
 								}
-
-							})
+							)
+							// Go through third-and-deeper-level menus.
+							// They just get flipped if there isn't 
+							// enough room for them.
 							.find("ul")
 									.each(function(){
 										var $parentMenu = $(this).parents("ul").first();
