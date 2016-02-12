@@ -14,20 +14,14 @@ $.fn.gardenburger = function(options){
 
     var defaultOptions = {
 	    submenuClass		: "hasChildMenu", // Class applied to LIs containing submenus
-    	navJSClass 			: "yesJS", // Class that gets applied to the nav's parent for styling based on presence of JS.
-    	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>" // The HTML that is injected to function as submenu toggler buttons in mobile mode. Uses buttons by default instead of As to lessen the likelihood of styling conflicts.
+    	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode. Uses buttons by default instead of As to lessen the likelihood of styling conflicts.
+    	mobileNavStyle		: "inline"
     };
     var settings = $.extend({}, defaultOptions, options);
 
     return this.each(function() {
 
 		$(this)
-
-
-				// Label the context for styling based
-				// on presence of JS
-
-				.addClass(settings.navJSClass)
 
 
 				// Since the focus event doesn't bubble
@@ -62,25 +56,22 @@ $.fn.gardenburger = function(options){
 						.end() // Back to context
 
 
-				// Start off with the nav hidden in mobile
-				// mode.
-
-				.children("ul:not(.mobileNav)")
-						.addClass("hidden")
-						.end() // Back to context
-
-
 				// Apply click event handling to the mobile
 				// menu button to handle visibility of
 				// navigation.
 
 				.on(
 					"click",
-					".menuToggle a",
+					".burger",
 					function (e) {
 						e.preventDefault();
-						$(this).children("ul:not(.mobileNav)")
-								.toggleClass("hidden");
+						if (settings.mobileNavStyle == "offscreen") {
+							$(this).closest("body")
+									.toggleClass("gardenburgerMobileShow");
+						} else {
+							$(this).children("ul:not(.mobileNav)")
+									.toggleClass("hidden")
+						}
 					}
 				)
 

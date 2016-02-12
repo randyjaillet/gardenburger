@@ -1,25 +1,26 @@
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//
+// Options
+//
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// Below this value constitutes mobile mode.
+// If you change this, remember to set it in the JS as well via
+// the "responsiveBreakpoint" option upon instantiation.
+breakpoint = 800px
+
+// If you change this to vertical, remember to set it in the JS
+// as well via the "orientation" option upon instantiation. If
+// you don't, the edge-conscious positioning of the flyouts will
+// be wonky.
+navOrientation = horizontal
+
+mobileNavStyle = inline
+
+
 body > header > nav
-
-	//////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////
-	//
-	// Options
-	//
-	//////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////
-
-	// Below this value constitutes mobile mode.
-	// If you change this, remember to set it in the JS as well via
-	// the "responsiveBreakpoint" option upon instantiation.
-	breakpoint = 800px
-
-	// If you change this to vertical, remember to set it in the JS
-	// as well via the "orientation" option upon instantiation. If
-	// you don't, the edge-conscious positioning of the flyouts will
-	// be wonky.
-	navOrientation = horizontal
-
-
 
 
 	//////////////////////////////////////////////////////////////////
@@ -30,8 +31,20 @@ body > header > nav
 	//////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////
 		
-	background-color #F5F5F5
 	text-align center
+
+
+
+	//////////////////////////////////////////////////////////////////
+	// TOP UL ONLY	//////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	if mobileNavStyle is offscreen
+		> ul
+			background #555
+			box-shadow inset -2px 0 5px -5px
+			@media (min-width: breakpoint)
+				background #F5F5F5
 
 
 
@@ -44,6 +57,9 @@ body > header > nav
 		margin 0
 		padding 0
 		list-style none
+		font-size 20px
+		@media (min-width: breakpoint)
+			font-size inherit
 
 		li
 			position relative
@@ -57,14 +73,16 @@ body > header > nav
 				text-decoration none
 				display block
 				padding 10px 20px
-				color #444
+				color white
+				@media (min-width: breakpoint)
+					color #444
 
 			// Links on hover/focus
 			&:hover > a,
 			&.focus > a
 				outline none
 				transition color .5s linear, background-color .5s linear
-								
+
 			// Links of list items that have submenus
 			&.hasChildMenu > a
 				padding-right 30px
@@ -109,7 +127,7 @@ body > header > nav
 					transform translateY(0) translateX(-10px) if navOrientation is vertical
 					margin-left 0
 					padding 10px 0
-					background-color lighten(@background-color, 10%)
+					background-color #F5F5F5
 					box-shadow 1px 1px 1px rgba(0,0,0,.07)
 
 				li
@@ -176,27 +194,13 @@ body > header > nav
 	// MOBILE NAV	//////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////
 
-	.mobileNav
+	.burger
+		padding 10px
 
-		&:after
-			content "."
+		svg
 			display block
-			clear both
-			visibility hidden
-			line-height 0
-			height 0
-
-		li
-			float left
-
-			// Hamburger/air vent/menu button 	//////////////////////
-
-			&.menuToggle
-				float right
-
-				svg
-					display block
-					size 18px
+			width 30px
+			height 25px
 
 
 
@@ -218,7 +222,7 @@ body > header > nav
 			border-style solid
 			border-color transparent
 			border-width 5px
-			border-top-color #444
+			border-top-color white
 			transition transform .25s linear
 			margin (@height / 2 - @border-width) auto 0 auto
 			size 0 // This needs to remain AFTER margin so that the @height reference bubbles
@@ -322,12 +326,30 @@ body > header > nav
 
 	// Menu visibility 	//////////////////////////////////////////////
 
-	// Hide submenus, but only if JS is enabled. If there's no JS, we
-	// can't inject the togglers, so we need to just show all the
-	// menus on the surface. This is mobile mode we're talkin' 'bout.
-	&.yesJS ul ul
+	> ul
+		display block
+		position absolute
+		right 100vw
+		top 0
+		width 200px
+		height 100vh
+		overflow auto
+		@media (min-width: breakpoint)
+			width auto
+			height auto
+			right auto
+			top auto
+			position static
+			overflow visible
+
+	// Hide submenus
+
+	ul ul
 		height 0
 		overflow hidden
+		@media (min-width: breakpoint)
+			height auto
+			overflow visible
 
 	// Show submenus when parent .open class is applied via JS
 	li.hasChildMenu.open > ul,
@@ -380,37 +402,12 @@ body > header > nav
 			right 100%
 
 
-	// Entire nav visibility 	//////////////////////////////////////
-
-	// This is applied and removed via JS to hide and show navigation
-	// in mobile mode
-	.hidden
-		position absolute
-		left -999em
-
-	// Ignore hidden state of nav in desktop mode
-	> ul.hidden
-		@media (min-width: breakpoint)
-			position static
-			left auto
-
-
 	// Mobile nav 	//////////////////////////////////////////////////
 
-	// Hide the mobile nav by default.
-	// Show it if JS is present.
-	// 		After all, if there is no JS, we'll show all the menus on the
-	// 		surface, and there will be no need for the mobile nav.
-	// Then hide it again in desktop mode, no matter what.
-	// So it only shows in mobile mode if JS is present.
-
-	&.yesJS .mobileNav
+	.burger
 		display block
-
-	.mobileNav,
-		display none
 		@media (min-width: breakpoint)
-			display none !important
+			display none
 
 
 	// Mobile elements 	//////////////////////////////////////////////
@@ -418,3 +415,19 @@ body > header > nav
 	.submenuTogglers
 		@media (min-width: breakpoint)
 			display none !important
+
+
+// Entire nav visibility 	//////////////////////////////////////
+
+if mobileNavStyle is offscreen
+
+	body
+		transition transform .15s linear
+	
+		&.gardenburgerMobileShow
+			overflow hidden
+			transform translateX(200px)
+			transition transform .15s linear
+			@media (min-width: breakpoint)
+				transform translateX(0)
+				overflow visible
