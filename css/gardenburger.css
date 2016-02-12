@@ -404,3 +404,13 @@ body > header > nav .mobileNav {
     display: none !important;
   }
 }
+body > header > nav .hidden {
+  position: absolute;
+  left: -999em;
+}
+@media (min-width: 800px) {
+  body > header > nav > ul.hidden {
+    position: static;
+    left: auto;
+  }
+}

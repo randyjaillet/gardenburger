@@ -441,8 +441,20 @@ body > header > nav
 			display none !important
 
 
-// Entire nav visibility 	//////////////////////////////////////
+	// Entire nav visibility 	//////////////////////////////////////
 
+	// This is applied and removed via JS to hide and show navigation
+	// in mobile mode
+	.hidden
+		position absolute
+		left -999em
+
+	// Ignore hidden state of nav in desktop mode
+	> ul.hidden
+		@media (min-width: breakpoint)
+			position static
+			left auto
+			
 if mobileNavStyle is offscreen
 
 	body
