@@ -202,6 +202,25 @@ body > header > nav ul li ul li a {
     transform: translateY(0) translateX(-10px);
   }
 }
+body > header > nav .mobileNav:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+body > header > nav .mobileNav li {
+  float: left;
+}
+body > header > nav .mobileNav li.menuToggle {
+  float: right;
+}
+body > header > nav .mobileNav li.menuToggle svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
 body > header > nav .burger {
   padding: 10px;
 }

@@ -194,6 +194,26 @@ body > header > nav
 	// MOBILE NAV	//////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////
 
+	.mobileNav
+
+		&:after
+			content "."
+			display block
+			clear both
+			visibility hidden
+			line-height 0
+			height 0
+
+		li
+			float left
+
+			&.menuToggle
+				float right
+
+				svg
+					display block
+					size 18px
+
 	.burger
 		padding 10px
 
