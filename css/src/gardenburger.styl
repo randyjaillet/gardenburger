@@ -196,7 +196,7 @@ body > header > nav
 	//////////////////////////////////////////////////////////////////
 
 	.mobileNav
-		background #F5F5F5
+		background #555
 
 		&:after
 			content "."
@@ -348,21 +348,22 @@ body > header > nav
 
 	// Menu visibility 	//////////////////////////////////////////////
 
-	> ul
-		display block
-		position absolute
-		right 100vw
-		top 0
-		width 200px
-		height 100vh
-		overflow auto
-		@media (min-width: breakpoint)
-			width auto
-			height auto
-			right auto
-			top auto
-			position static
-			overflow visible
+	if mobileNavStyle is offscreen
+		> ul
+			display block
+			position absolute
+			right 100vw
+			top 0
+			width 200px
+			height 100vh
+			overflow auto
+			@media (min-width: breakpoint)
+				width auto
+				height auto
+				right auto
+				top auto
+				position static
+				overflow visible
 
 	// Hide submenus
 
@@ -426,7 +427,8 @@ body > header > nav
 
 	// Mobile nav 	//////////////////////////////////////////////////
 
-	.burger
+	.burger,
+	.mobileNav
 		display block
 		@media (min-width: breakpoint)
 			display none

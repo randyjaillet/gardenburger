@@ -204,7 +204,7 @@ body > header > nav ul li ul li a {
   }
 }
 body > header > nav .mobileNav {
-  background: #f5f5f5;
+  background: #555;
 }
 body > header > nav .mobileNav:after {
   content: ".";
@@ -324,25 +324,6 @@ body > header > nav li.hasChildMenu.open > .submenuTogglers i {
     transition: right 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
 }
-body > header > nav > ul {
-  display: block;
-  position: absolute;
-  right: 100vw;
-  top: 0;
-  width: 200px;
-  height: 100vh;
-  overflow: auto;
-}
-@media (min-width: 800px) {
-  body > header > nav > ul {
-    width: auto;
-    height: auto;
-    right: auto;
-    top: auto;
-    position: static;
-    overflow: visible;
-  }
-}
 body > header > nav ul ul {
   height: 0;
   overflow: hidden;
@@ -408,11 +389,13 @@ body > header > nav li.hasChildMenu.open > .menuPositioningWrapper > ul {
     right: 100%;
   }
 }
-body > header > nav .burger {
+body > header > nav .burger,
+body > header > nav .mobileNav {
   display: block;
 }
 @media (min-width: 800px) {
-  body > header > nav .burger {
+  body > header > nav .burger,
+  body > header > nav .mobileNav {
     display: none;
   }
 }
