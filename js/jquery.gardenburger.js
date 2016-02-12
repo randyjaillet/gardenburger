@@ -15,11 +15,13 @@ $.fn.gardenburger = function(options){
     var defaultOptions = {
 	    submenuClass		: "hasChildMenu", // Class applied to LIs containing submenus
     	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode. Uses buttons by default instead of As to lessen the likelihood of styling conflicts.
-    	mobileNavStyle		: "inline"
+    	mobileNavStyle		: "offscreen"
     };
     var settings = $.extend({}, defaultOptions, options);
 
     return this.each(function() {
+	    
+	    var $g = $(this);
 
 		$(this)
 
@@ -65,13 +67,18 @@ $.fn.gardenburger = function(options){
 					".burger",
 					function (e) {
 						e.preventDefault();
-						if (settings.mobileNavStyle == "offscreen") {
-							$(this).closest("body")
-									.toggleClass("gardenburgerMobileShow");
-						} else {
-							$(this).children("ul:not(.mobileNav)")
-									.toggleClass("hidden")
-						}
+						$("body").toggleClass("gardenburgerMobileShow");
+					}
+				)
+
+				.on(
+					"click",
+					".menuToggle a",
+					function (e) {
+						e.preventDefault();
+						console.log("this is ", $(this));
+						$g.children("ul:not(.mobileNav)")
+								.toggleClass("hidden");
 					}
 				)
 

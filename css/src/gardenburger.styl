@@ -17,7 +17,8 @@ breakpoint = 800px
 // be wonky.
 navOrientation = horizontal
 
-mobileNavStyle = inline
+// offscreen or inline
+mobileNavStyle = offscreen
 
 
 body > header > nav
@@ -74,7 +75,8 @@ body > header > nav
 				text-decoration none
 				display block
 				padding 10px 20px
-				color white
+				color white if mobileNavStyle is offscreen
+				color #444 if mobileNavStyle is inline
 				@media (min-width: breakpoint)
 					color #444
 
@@ -196,7 +198,8 @@ body > header > nav
 	//////////////////////////////////////////////////////////////////
 
 	.mobileNav
-		background #555
+		box-shadow 0 2px 2px rgba(black,.2)
+		background #555 linear-gradient(top,rgba(white, .07),rgba(black, .07))
 
 		&:after
 			content "."
@@ -208,13 +211,20 @@ body > header > nav
 
 		li
 			float left
+			
+			a
+				color white
 
 			&.menuToggle
 				float right
 
 				svg
 					display block
+					margin 2px 0 0 0
 					size 18px
+
+					path
+						fill white
 
 	.burger
 		padding 10px
@@ -223,6 +233,9 @@ body > header > nav
 			display block
 			width 30px
 			height 25px
+
+			path
+				fill #444
 
 
 
@@ -244,7 +257,8 @@ body > header > nav
 			border-style solid
 			border-color transparent
 			border-width 5px
-			border-top-color white
+			border-top-color white if mobileNavStyle is offscreen
+			border-top-color #444 if mobileNavStyle is inline
 			transition transform .25s linear
 			margin (@height / 2 - @border-width) auto 0 auto
 			size 0 // This needs to remain AFTER margin so that the @height reference bubbles
