@@ -62,6 +62,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 
 body > header > nav {
   text-align: center;
+  background: #f5f5f5;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 body > header > nav ul {
@@ -201,6 +202,9 @@ body > header > nav ul li ul li a {
     -ms-transform: translateY(0) translateX(-10px);
     transform: translateY(0) translateX(-10px);
   }
+}
+body > header > nav .mobileNav {
+  background: #f5f5f5;
 }
 body > header > nav .mobileNav:after {
   content: ".";

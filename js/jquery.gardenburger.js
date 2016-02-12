@@ -98,6 +98,15 @@ $.fn.gardenburger = function(options){
 					}
 				)
 		;
+		
+		if (settings.mobileNavStyle == "inline") {
+			// Start off with the nav hidden in mobile
+			// mode.
+
+			$(this).children("ul:not(.mobileNav)")
+					.addClass("hidden")
+					.end() // Back to context
+		}
 
 		$(
 			function(){
