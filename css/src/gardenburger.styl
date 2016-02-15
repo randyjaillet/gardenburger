@@ -471,13 +471,18 @@ body > header > nav
 			
 if mobileNavStyle is offscreen
 
-	body
-		transition transform .15s linear
+	html
+
+		body
+			transition transform .15s linear
 	
 		&.gardenburgerMobileShow
 			overflow hidden
-			transform translateX(200px)
-			transition transform .15s linear
 			@media (min-width: breakpoint)
-				transform translateX(0)
 				overflow visible
+
+			body
+				transform translateX(200px)
+				transition transform .15s linear
+				@media (min-width: breakpoint)
+					transform translateX(0)

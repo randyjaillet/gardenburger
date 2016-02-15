@@ -459,15 +459,22 @@ body > header > nav .hidden {
     left: auto;
   }
 }
-body {
+html body {
   -webkit-transition: -webkit-transform 0.15s linear;
   -moz-transition: -moz-transform 0.15s linear;
   -o-transition: -o-transform 0.15s linear;
   -ms-transition: -ms-transform 0.15s linear;
   transition: transform 0.15s linear;
 }
-body.gardenburgerMobileShow {
+html.gardenburgerMobileShow {
   overflow: hidden;
+}
+@media (min-width: 800px) {
+  html.gardenburgerMobileShow {
+    overflow: visible;
+  }
+}
+html.gardenburgerMobileShow body {
   -webkit-transform: translateX(200px);
   -moz-transform: translateX(200px);
   -o-transform: translateX(200px);
@@ -480,12 +487,11 @@ body.gardenburgerMobileShow {
   transition: transform 0.15s linear;
 }
 @media (min-width: 800px) {
-  body.gardenburgerMobileShow {
+  html.gardenburgerMobileShow body {
     -webkit-transform: translateX(0);
     -moz-transform: translateX(0);
     -o-transform: translateX(0);
     -ms-transform: translateX(0);
     transform: translateX(0);
-    overflow: visible;
   }
 }

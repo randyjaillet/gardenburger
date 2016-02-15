@@ -67,7 +67,7 @@ $.fn.gardenburger = function(options){
 					".burger",
 					function (e) {
 						e.preventDefault();
-						$("body").toggleClass("gardenburgerMobileShow");
+						$("html").toggleClass("gardenburgerMobileShow");
 					}
 				)
 
