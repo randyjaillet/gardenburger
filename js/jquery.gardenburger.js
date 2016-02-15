@@ -34,17 +34,17 @@ $.fn.gardenburger = function(options){
 
     			.on(
 	    			"focus",
-	    			"li",
+	    			"a",
 	    			function (e) {
-						$(e.target).addClass("focus");
+						$(e.target).parents("li").addClass("focus");
 						$(e.target).trigger("bubblyfocus");
 					}
 				)
     			.on(
 	    			"blur",
-	    			"li",
+	    			"a",
 	    			function(e){
-						$(e.target).removeClass("focus");
+						$(e.target).parents("li").removeClass("focus");
 					}
 				)
 
