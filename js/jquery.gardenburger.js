@@ -14,7 +14,7 @@ $.fn.gardenburger = function(options){
 
     var defaultOptions = {
 	    submenuClass		: "hasChildMenu", // Class applied to LIs containing submenus
-    	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode. Uses buttons by default instead of As to lessen the likelihood of styling conflicts.
+    	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode.
     	mobileNavStyle		: "offscreen"
     };
     var settings = $.extend({}, defaultOptions, options);

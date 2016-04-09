@@ -354,7 +354,7 @@ body > header > nav li.hasChildMenu.open > .submenuTogglers i {
 body > header > nav > ul {
   display: block;
   position: absolute;
-  right: 100vw;
+  left: -200px;
   top: 0;
   width: 200px;
   height: 100vh;
@@ -476,6 +476,7 @@ html.gardenburgerMobileShow {
   }
 }
 html.gardenburgerMobileShow body {
+  overflow: visible !important;
   -webkit-transform: translateX(200px);
   -moz-transform: translateX(200px);
   -o-transform: translateX(200px);
