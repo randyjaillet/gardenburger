@@ -76,7 +76,6 @@ $.fn.gardenburger = function(options){
 					".menuToggle a",
 					function (e) {
 						e.preventDefault();
-						console.log("this is ", $(this));
 						$g.children("ul:not(.mobileNav)")
 								.toggleClass("hidden");
 					}
@@ -127,7 +126,7 @@ $.fn.gardenburger = function(options){
 
 		function calculateMenuPositioning() {
 
-			$(this)
+			$g
 					// Reset previously flipped menus.
 					.find("ul")
 							.removeClass("flip")
