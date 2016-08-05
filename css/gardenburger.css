@@ -166,32 +166,36 @@ body > header > nav ul li.hasChildMenu.open > .submenuTogglers i {
   -ms-transition: -ms-transform 0.25s linear;
   transition: transform 0.25s linear;
 }
-body > header > nav ul li.hasChildMenu > ul {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 1 100%;
-  -ms-flex: 1 1 100%;
-  flex: 1 1 100%;
+@media (max-width: 799px) {
+  body > header > nav ul li.hasChildMenu > ul {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -o-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1 1 100%;
+    -ms-flex: 1 1 100%;
+    flex: 1 1 100%;
+  }
 }
 body > header > nav > ul > li:first-child {
   margin-top: 0;
 }
-body > header > nav ul li a {
-  padding-left: 20px;
-}
-body > header > nav ul li li a {
-  padding-left: 30px;
-}
-body > header > nav ul li li li a {
-  padding-left: 40px;
-}
-body > header > nav ul li li li li a {
-  padding-left: 50px;
-}
-body > header > nav ul li li li li li a {
-  padding-left: 60px;
+@media (max-width: 799px) {
+  body > header > nav ul li a {
+    padding-left: 20px;
+  }
+  body > header > nav ul li li a {
+    padding-left: 30px;
+  }
+  body > header > nav ul li li li a {
+    padding-left: 40px;
+  }
+  body > header > nav ul li li li li a {
+    padding-left: 50px;
+  }
+  body > header > nav ul li li li li li a {
+    padding-left: 60px;
+  }
 }
 body > header > nav > ul {
   background: #eee;
@@ -203,6 +207,18 @@ body > header > nav > ul {
     background: none;
     -webkit-box-shadow: none;
     box-shadow: none;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    -o-box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -o-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
   }
 }
 body > header > nav ul {
@@ -217,13 +233,9 @@ body > header > nav ul {
   }
 }
 body > header > nav ul li {
+  display: block;
   position: relative;
   text-align: left;
-}
-@media (min-width: 800px) {
-  body > header > nav ul li {
-    display: inline-block;
-  }
 }
 body > header > nav ul li a {
   -webkit-transition: color 0.5s linear, background-color 0.5s linear;
@@ -334,11 +346,11 @@ body > header > nav ul li ul {
     transform: translateY(-10px) translateX(0);
     padding: 10px 0;
     background-color: #f5f5f5;
+    width: 200px;
   }
 }
 @media (min-width: 800px) {
   body > header > nav ul li ul li {
-    display: block;
     min-width: 180px;
     padding: 0;
     text-align: left;
@@ -470,9 +482,15 @@ body > header > nav > ul {
 }
 @media (min-width: 800px) {
   body > header > nav > ul {
+    display: -webkit-box !important;
+    display: -moz-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: box !important;
+    display: flex !important;
     width: auto;
     height: auto;
-    right: auto;
+    left: auto;
     top: auto !important;
     position: static;
     overflow: visible;

@@ -275,8 +275,7 @@ Gardenburger.prototype.positionMenus = function () {
 			// adjust these higher ones'.
 			// We're storing the horizontal position at which
 			// menus would be if they were visible in the
-			// "visiblePosX" key on the jQuery data() method for
-			// each menu.
+			// "visiblePosX" data key.
 			.find("ul:first > li > ul, ul:first > li > .menuPositioningWrapper > ul")
 					.each(
 						function () {
