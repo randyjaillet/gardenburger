@@ -61,18 +61,148 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 
 
 body > header > nav {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   text-align: center;
   background: #f5f5f5;
   -webkit-font-smoothing: subpixel-antialiased;
 }
+body > header > nav *,
+body > header > nav *:before,
+body > header > nav *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body > header > nav ul li {
+  margin-top: 1px;
+}
+@media (min-width: 800px) {
+  body > header > nav ul li {
+    margin-top: 0;
+  }
+}
+body > header > nav ul li.open {
+  background: rgba(0,0,0,0.1);
+}
+@media (min-width: 800px) {
+  body > header > nav ul li.open {
+    background: none;
+  }
+}
+body > header > nav ul li a {
+  background: rgba(0,0,0,0.1);
+}
+@media (min-width: 800px) {
+  body > header > nav ul li a {
+    background: none;
+  }
+}
+body > header > nav ul li a:hover,
+body > header > nav ul li a:focus {
+  outline: none;
+  background: rgba(0,0,0,0.2);
+}
+body > header > nav ul li.hasChildMenu .submenuTogglers {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 0 0 60px;
+  -ms-flex: 0 0 60px;
+  flex: 0 0 60px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: rgba(0,0,0,0.1);
+  -webkit-transition: background-color 0.5s linear;
+  -moz-transition: background-color 0.5s linear;
+  -o-transition: background-color 0.5s linear;
+  -ms-transition: background-color 0.5s linear;
+  transition: background-color 0.5s linear;
+}
+body > header > nav ul li.hasChildMenu .submenuTogglers:hover,
+body > header > nav ul li.hasChildMenu .submenuTogglers:focus {
+  outline: none;
+  background: rgba(0,0,0,0.2);
+  -webkit-transition: background-color 0.5s linear;
+  -moz-transition: background-color 0.5s linear;
+  -o-transition: background-color 0.5s linear;
+  -ms-transition: background-color 0.5s linear;
+  transition: background-color 0.5s linear;
+}
+body > header > nav ul li.hasChildMenu .submenuTogglers i {
+  display: block;
+  -webkit-transform-origin: center 20%;
+  -moz-transform-origin: center 20%;
+  -o-transform-origin: center 20%;
+  -ms-transform-origin: center 20%;
+  transform-origin: center 20%;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 6px;
+  border-top-color: #444;
+  -webkit-transition: -webkit-transform 0.25s linear;
+  -moz-transition: -moz-transform 0.25s linear;
+  -o-transition: -o-transform 0.25s linear;
+  -ms-transition: -ms-transform 0.25s linear;
+  transition: transform 0.25s linear;
+  margin: 6px auto 0 auto;
+  width: 0;
+  height: 0;
+}
+body > header > nav ul li.hasChildMenu.open > .submenuTogglers i {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-transition: -webkit-transform 0.25s linear;
+  -moz-transition: -moz-transform 0.25s linear;
+  -o-transition: -o-transform 0.25s linear;
+  -ms-transition: -ms-transform 0.25s linear;
+  transition: transform 0.25s linear;
+}
+body > header > nav ul li.hasChildMenu > ul {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 100%;
+  -ms-flex: 1 1 100%;
+  flex: 1 1 100%;
+}
+body > header > nav > ul > li:first-child {
+  margin-top: 0;
+}
+body > header > nav ul li a {
+  padding-left: 20px;
+}
+body > header > nav ul li li a {
+  padding-left: 30px;
+}
+body > header > nav ul li li li a {
+  padding-left: 40px;
+}
+body > header > nav ul li li li li a {
+  padding-left: 50px;
+}
+body > header > nav ul li li li li li a {
+  padding-left: 60px;
+}
 body > header > nav > ul {
-  background: #555;
+  background: #eee;
   -webkit-box-shadow: inset -2px 0 5px -5px;
   box-shadow: inset -2px 0 5px -5px;
 }
 @media (min-width: 800px) {
   body > header > nav > ul {
-    background: #f5f5f5;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
   }
 }
 body > header > nav ul {
@@ -103,26 +233,59 @@ body > header > nav ul li a {
   transition: color 0.5s linear, background-color 0.5s linear;
   text-decoration: none;
   display: block;
-  padding: 10px 20px;
-  color: #fff;
+  padding: 20px 20px;
+  line-height: 20px;
+  color: #444;
 }
 @media (min-width: 800px) {
   body > header > nav ul li a {
+    padding: 10px 20px;
     color: #444;
   }
 }
-body > header > nav ul li:hover > a,
-body > header > nav ul li.focus > a {
-  outline: none;
-  background-color: rgba(0,0,0,0.03);
-  -webkit-transition: color 0.5s linear, background-color 0.5s linear;
-  -moz-transition: color 0.5s linear, background-color 0.5s linear;
-  -o-transition: color 0.5s linear, background-color 0.5s linear;
-  -ms-transition: color 0.5s linear, background-color 0.5s linear;
-  transition: color 0.5s linear, background-color 0.5s linear;
+@media (min-width: 800px) {
+  body > header > nav ul li:hover > a,
+  body > header > nav ul li.focus > a {
+    outline: none;
+    background-color: rgba(0,0,0,0.03);
+    -webkit-transition: color 0.5s linear, background-color 0.5s linear;
+    -moz-transition: color 0.5s linear, background-color 0.5s linear;
+    -o-transition: color 0.5s linear, background-color 0.5s linear;
+    -ms-transition: color 0.5s linear, background-color 0.5s linear;
+    transition: color 0.5s linear, background-color 0.5s linear;
+  }
+}
+@media (max-width: 799px) {
+  body > header > nav ul li.hasChildMenu {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: box;
+    display: flex;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    -o-box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
 }
 body > header > nav ul li.hasChildMenu > a {
-  padding-right: 30px;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 1px;
+  -ms-flex: 1 1 1px;
+  flex: 1 1 1px;
+  margin-right: 1px;
+}
+@media (min-width: 800px) {
+  body > header > nav ul li.hasChildMenu > a {
+    margin-right: 0;
+    padding-right: 30px;
+  }
 }
 @media (min-width: 800px) {
   body > header > nav ul li.hasChildMenu > a:after {
@@ -161,7 +324,6 @@ body > header > nav ul li.hasChildMenu > a {
 }
 body > header > nav ul li ul {
   z-index: 10;
-  margin-left: 10%;
 }
 @media (min-width: 800px) {
   body > header > nav ul li ul {
@@ -170,11 +332,8 @@ body > header > nav ul li ul {
     -o-transform: translateY(-10px) translateX(0);
     -ms-transform: translateY(-10px) translateX(0);
     transform: translateY(-10px) translateX(0);
-    margin-left: 0;
     padding: 10px 0;
     background-color: #f5f5f5;
-    -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.07);
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.07);
   }
 }
 @media (min-width: 800px) {
@@ -214,92 +373,33 @@ body > header > nav ul li ul li a {
     transform: translateY(0) translateX(-10px);
   }
 }
-body > header > nav .mobileNav {
-  -webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.2);
-  box-shadow: 0 2px 2px rgba(0,0,0,0.2);
-  background: #555 -webkit-linear-gradient(top, rgba(255,255,255,0.07), rgba(0,0,0,0.07));
-  background: #555 -moz-linear-gradient(top, rgba(255,255,255,0.07), rgba(0,0,0,0.07));
-  background: #555 -o-linear-gradient(top, rgba(255,255,255,0.07), rgba(0,0,0,0.07));
-  background: #555 -ms-linear-gradient(top, rgba(255,255,255,0.07), rgba(0,0,0,0.07));
-  background: #555 linear-gradient(to bottom, rgba(255,255,255,0.07), rgba(0,0,0,0.07));
-}
-body > header > nav .mobileNav:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-}
-body > header > nav .mobileNav li {
-  float: left;
-}
-body > header > nav .mobileNav li a {
-  color: #fff;
-}
-body > header > nav .mobileNav li.menuToggle {
-  float: right;
-}
-body > header > nav .mobileNav li.menuToggle svg {
-  display: block;
-  margin: 2px 0 0 0;
-  width: 18px;
-  height: 18px;
-}
-body > header > nav .mobileNav li.menuToggle svg path {
-  fill: #fff;
-}
 body > header > nav .burger {
+  text-align: left;
+}
+body > header > nav .burger a {
+  display: inline-block;
+  vertical-align: top;
   padding: 10px;
+  height: 40px;
+  width: 44.6px;
 }
-body > header > nav .burger svg {
+body > header > nav .burger a i {
   display: block;
-  width: 30px;
-  height: 25px;
+  height: 4px;
+  background: #333;
+  -webkit-transform-origin: 1px center;
+  -moz-transform-origin: 1px center;
+  -o-transform-origin: 1px center;
+  -ms-transform-origin: 1px center;
+  transform-origin: 1px center;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  -ms-transition: all 0.15s linear;
+  transition: all 0.15s linear;
 }
-body > header > nav .burger svg path {
-  fill: #444;
-}
-body > header > nav .submenuTogglers {
-  border: none;
-  background: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 33px;
-  height: 33px;
-}
-body > header > nav .submenuTogglers i {
-  display: block;
-  -webkit-transform-origin: center 20%;
-  -moz-transform-origin: center 20%;
-  -o-transform-origin: center 20%;
-  -ms-transform-origin: center 20%;
-  transform-origin: center 20%;
-  border-style: solid;
-  border-color: transparent;
-  border-width: 5px;
-  border-top-color: #fff;
-  -webkit-transition: -webkit-transform 0.25s linear;
-  -moz-transition: -moz-transform 0.25s linear;
-  -o-transition: -o-transform 0.25s linear;
-  -ms-transition: -ms-transform 0.25s linear;
-  transition: transform 0.25s linear;
-  margin: 11.5px auto 0 auto;
-  width: 0;
-  height: 0;
-}
-body > header > nav li.hasChildMenu.open > .submenuTogglers i {
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-  -webkit-transition: -webkit-transform 0.25s linear;
-  -moz-transition: -moz-transform 0.25s linear;
-  -o-transition: -o-transform 0.25s linear;
-  -ms-transition: -ms-transform 0.25s linear;
-  transition: transform 0.25s linear;
+body > header > nav .burger a i + i {
+  margin-top: 4px;
 }
 @media (min-width: 800px) {
   body > header > nav li ul {
@@ -351,12 +451,20 @@ body > header > nav li.hasChildMenu.open > .submenuTogglers i {
     transition: right 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
 }
+body > header > nav ul {
+  display: none;
+}
+@media (min-width: 800px) {
+  body > header > nav ul {
+    display: block !important;
+  }
+}
 body > header > nav > ul {
-  display: block;
+  display: block !important;
   position: absolute;
-  left: -200px;
+  left: -250px;
   top: 0;
-  width: 200px;
+  width: 250px;
   height: 100vh;
   overflow: auto;
 }
@@ -365,24 +473,10 @@ body > header > nav > ul {
     width: auto;
     height: auto;
     right: auto;
-    top: auto;
+    top: auto !important;
     position: static;
     overflow: visible;
   }
-}
-body > header > nav ul ul {
-  height: 0;
-  overflow: hidden;
-}
-@media (min-width: 800px) {
-  body > header > nav ul ul {
-    height: auto;
-    overflow: visible;
-  }
-}
-body > header > nav li.hasChildMenu.open > ul,
-body > header > nav li.hasChildMenu.open > .menuPositioningWrapper > ul {
-  height: auto;
 }
 @media (min-width: 800px) {
   body > header > nav li ul {
@@ -435,30 +529,53 @@ body > header > nav li.hasChildMenu.open > .menuPositioningWrapper > ul {
     right: 100%;
   }
 }
-body > header > nav .burger,
-body > header > nav .mobileNav {
-  display: block;
-}
-@media (min-width: 800px) {
-  body > header > nav .burger,
-  body > header > nav .mobileNav {
-    display: none;
-  }
-}
 @media (min-width: 800px) {
   body > header > nav .submenuTogglers {
     display: none !important;
   }
 }
-body > header > nav .hidden {
-  position: absolute;
-  left: -999em;
+.burger {
+  display: block;
 }
 @media (min-width: 800px) {
-  body > header > nav > ul.hidden {
-    position: static;
-    left: auto;
+  .burger {
+    display: none;
   }
+}
+.gardenburgerMobileShow .burger a i,
+.mobileShow .burger a i {
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  -ms-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+}
+.gardenburgerMobileShow .burger a i:first-child,
+.mobileShow .burger a i:first-child {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.gardenburgerMobileShow .burger a i:nth-child(2),
+.mobileShow .burger a i:nth-child(2) {
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  -ms-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.gardenburgerMobileShow .burger a i:last-child,
+.mobileShow .burger a i:last-child {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 html body {
   -webkit-transition: -webkit-transform 0.15s linear;
@@ -477,11 +594,11 @@ html.gardenburgerMobileShow {
 }
 html.gardenburgerMobileShow body {
   overflow: visible !important;
-  -webkit-transform: translateX(200px);
-  -moz-transform: translateX(200px);
-  -o-transform: translateX(200px);
-  -ms-transform: translateX(200px);
-  transform: translateX(200px);
+  -webkit-transform: translateX(250px);
+  -moz-transform: translateX(250px);
+  -o-transform: translateX(250px);
+  -ms-transform: translateX(250px);
+  transform: translateX(250px);
   -webkit-transition: -webkit-transform 0.15s linear;
   -moz-transition: -moz-transform 0.15s linear;
   -o-transition: -o-transform 0.15s linear;
