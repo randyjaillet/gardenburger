@@ -24,10 +24,10 @@ var Gardenburger = function ($e, options) {
 
 	this.settings = $.extend(
 		{
-		    submenuClass		: "hasChildMenu", // Class applied to LIs containing submenus
-	    	injectedTogglerHTML : "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode.
-	    	mobileNavStyle		: "offscreen",
-	    	breakpoint			: 800
+		    submenuClass			: "hasChildMenu", // Class applied to LIs containing submenus
+	    	injectedTogglerHTML 	: "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode.
+	    	breakpoint				: 800,
+	    	sectionParentsAreActive	: true
 		},
 		options
 	);
@@ -93,21 +93,40 @@ Gardenburger.prototype.init = function () {
 				"touchend",
 				"li." + root.settings.submenuClass + " > a",
 				function (e) {
-					if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
-						e.preventDefault();
-
-						$(e.target).data("tappedOnce",true);
+					if (root.settings.sectionParentsAreActive) {
+						if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
+							e.preventDefault();
 	
-						$(document).on(
-							"touchstart.tapCountReset" + root.i,
-							function (e2) {
-								if ( !$(e2.target).is($(e.target)) && !$(e2.target).closest($(e.target)).length ) {
-									$(e.target).data("tappedOnce",false).blur();
-									root.e.off("touchstart.tapCountReset" + root.i);
+							$(e.target).data("tappedOnce",true);
+		
+							$(document).on(
+								"touchstart.tapCountReset" + root.i,
+								function (e2) {
+									if ( !$(e2.target).is($(e.target)) && !$(e2.target).closest($(e.target)).length ) {
+										$(e.target).data("tappedOnce",false).blur();
+										root.e.off("touchstart.tapCountReset" + root.i);
+									}
 								}
-							}
-						);
-
+							);
+	
+						}
+					}
+				}
+			)
+			
+			
+			// If section parents are set to be inactive,
+			// disable their click behavior on desktop
+			// mode. In mobile mode, trigger opening the
+			// submenu on click.
+			
+			.on(
+				"click",
+				"li." + root.settings.submenuClass + " > a",
+				function (e) {
+					if (!root.settings.sectionParentsAreActive) {
+						e.preventDefault();
+						$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
 					}
 				}
 			)
@@ -122,11 +141,7 @@ Gardenburger.prototype.init = function () {
 				".burger a",
 				function (e) {
 					e.preventDefault();
-					if (root.settings.mobileNavStyle == "offscreen") {
-						$("html").is(".gardenburgerMobileShow") ? root.hideMenuMobileOffscreen.apply(root) : root.showMenuMobileOffscreen.apply(root);
-					} else if (root.settings.mobileNavStyle == "inline") {
-						root.e.children("ul").is(":visible") ? root.hideMenuMobileInline.apply(root) : root.showMenuMobileInline.apply(root);
-					}
+					root.e.is(".mobileShow") ? root.hideMenuMobileInline.apply(root) : root.showMenuMobileInline.apply(root);
 				}
 			)
 
@@ -146,41 +161,50 @@ Gardenburger.prototype.init = function () {
 			.on(
 				"click",
 				".submenuTogglers",
-				function(e){
+				function (e) {
 					var $li = $(e.target).closest("li");
 					var $ul = $li.children("ul").eq(0);
+					var visHeight = $ul.outerHeight();
 					e.preventDefault();
 
-					if ($li.is(".open")) {
-						$li.removeClass("open");
-						$ul.slideUp("fast");
-					} else {
-						$li.addClass("open");
-						$ul.slideDown("fast");
+					if (!$ul.is(":animated")) {
+						if ($li.is(".open")) {
+							$li.removeClass("opening");
+							$ul.animate(
+								{
+									height : 0
+								},
+								"fast",
+								"linear",
+								function () {
+									$li.removeClass("open");
+									$(this).attr("style","");
+								}
+							);
+						} else {
+							$li.addClass("opening");
+							$ul.css(
+								{
+									height : 0,
+									position : "static",
+									left : "auto"
+								}
+							).animate(
+								{
+									height : visHeight
+								},
+								"fast",
+								"linear",
+								function () {
+									$li.addClass("open");
+									$(this).attr("style","");
+								}
+							);
+						}
 					}
 				}
 			)
 	;
-
-
-	if (root.settings.mobileNavStyle == "inline") {
-		// Start off with the nav hidden in mobile mode.
-		this.e.children("ul").hide();
-	}
-	
-	
-	// If the mobile nav is in offscreen mode,
-	// we have to keep it positioned with the
-	// top of the viewport.
-
-	if (root.settings.mobileNavStyle == "offscreen") {
-		$(window).on(
-			"scroll",
-			function () {
-				root.positionOffscreenNavVertically();
-			}
-		)
-	}
 
 
 	// Position the menus now and on resize.
@@ -192,60 +216,61 @@ Gardenburger.prototype.init = function () {
 			root.positionMenus()
 		}
 	);
-}
 
 
-
-Gardenburger.prototype.showMenuMobileOffscreen = function () {
-	var root = this;
-	
-	$("html").addClass("gardenburgerMobileShow");
+	// Remove focus from menu items so the dropdowns
+	// close if user taps on document outside of
+	// said menu.
 
 	$(document).on(
-		"click.gardenburgerOffscreenMobileShow" + root.i + " touchend.gardenburgerOffscreenMobileShow" + root.i,
-		function (e2) {
-			if ( !$(e2.target).is(root.e) && !$(e2.target).closest(root.e).length ) {
-				root.hideMenuMobileOffscreen();
-			}
+		"touchstart",
+		function () {
+			root.e.find(":focus").blur();
 		}
-	);
+	)
 }
 
 
 
 Gardenburger.prototype.showMenuMobileInline = function () {
 	var root = this;
+	var $navList = root.e.children("ul:last");
+	var visHeight = $navList.outerHeight();
 
-	root.e.children("ul").slideDown("fast");
-	root.e.addClass("mobileShow");
-}
-
-
-
-Gardenburger.prototype.hideMenuMobileOffscreen = function () {
-	var root = this;
-	
-	$("html").removeClass("gardenburgerMobileShow");
-	$(document).off("click.gardenburgerOffscreenMobileShow" + root.i + " touchend.gardenburgerOffscreenMobileShow" + root.i);
+	!$navList.is(":animated") && root.e.find(".burger").addClass("ex").end().find($navList).css(
+		{
+			height : 0,
+			position : "static",
+			left : "auto"
+		}
+	).animate(
+		{
+			height : visHeight
+		},
+		"fast",
+		"linear",
+		function () {
+			root.e.addClass("mobileShow");
+			$(this).attr("style","");
+		}
+	);
 }
 
 
 
 Gardenburger.prototype.hideMenuMobileInline = function () {
 	var root = this;
+	var $navList = root.e.children("ul:last");
 
-	root.e.children("ul").slideUp("fast");
-	root.e.removeClass("mobileShow");
-}
-
-
-
-Gardenburger.prototype.positionOffscreenNavVertically = function () {
-	var root = this;
-	
-	root.e.children("ul").css(
+	!$navList.is(":animated") && root.e.find(".burger").removeClass("ex").end().find($navList).animate(
 		{
-			top : $(window).scrollTop()
+			height : 0
+		},
+		"fast",
+		"linear",
+		function () {
+			root.e.removeClass("mobileShow");
+			$(this).attr("style","");
 		}
 	)
 }
