@@ -24,20 +24,17 @@ var Gardenburger = function ($e, options) {
 
 	this.settings = $.extend(
 		{
-		    submenuClass			: "hasChildMenu", // Class applied to LIs containing submenus
-	    	injectedTogglerHTML 	: "<button class=\"submenuTogglers\"><i></i></button>", // The HTML that is injected to function as submenu toggler buttons in mobile mode.
 	    	breakpoint				: 800,
 	    	sectionParentsAreActive	: true
 		},
 		options
 	);
+
+	window.gardenburgers.push(this);
 	
 	var root = this;
 	this.i = $(window.gardenburgers).index(this);
 	this.e = $e;
-	this.mobileMenusMeasured = false;
-
-	window.gardenburgers.push(this);
 	
 	this.init();
 	
@@ -76,10 +73,11 @@ Gardenburger.prototype.init = function () {
 
 			// Since a parent selector (:has()?) in CSS
 			// is currently a distant fantasy, apply a
-			// class to LIs that contain submenus.
+			// class to LIs that contain submenus. Close
+			// them for initial state.
 
 			.find("li:has(ul)")
-					.addClass(root.settings.submenuClass)
+					.addClass("hasChildMenu closed")
 					.end() // Back to context
 
 
@@ -91,7 +89,7 @@ Gardenburger.prototype.init = function () {
 			
 			.on(
 				"touchend",
-				"li." + root.settings.submenuClass + " > a",
+				"li.hasChildMenu > a",
 				function (e) {
 					if (root.settings.sectionParentsAreActive) {
 						if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
@@ -122,7 +120,7 @@ Gardenburger.prototype.init = function () {
 			
 			.on(
 				"click",
-				"li." + root.settings.submenuClass + " > a",
+				"li.hasChildMenu > a",
 				function (e) {
 					if (!root.settings.sectionParentsAreActive) {
 						e.preventDefault();
@@ -141,7 +139,7 @@ Gardenburger.prototype.init = function () {
 				".burger a",
 				function (e) {
 					e.preventDefault();
-					root.e.is(".mobileShow") ? root.hideMenuMobileInline.apply(root) : root.showMenuMobileInline.apply(root);
+					root.e.is(".mobileHide") ? root.showMenuMobileInline.apply(root) : root.hideMenuMobileInline.apply(root);
 				}
 			)
 
@@ -153,7 +151,7 @@ Gardenburger.prototype.init = function () {
 			.find("li.hasChildMenu")
 					.each(
 						function (i, el) {
-			    			$(this).children("a").after(root.settings.injectedTogglerHTML);
+			    			$(this).children("a").after("<button class=\"submenuTogglers\"><i></i></button>");
 			    		}
 			    	)
 			    	.end() // Back to context
@@ -164,44 +162,9 @@ Gardenburger.prototype.init = function () {
 				function (e) {
 					var $li = $(e.target).closest("li");
 					var $ul = $li.children("ul").eq(0);
-					var visHeight = $ul.outerHeight();
 					e.preventDefault();
 
-					if (!$ul.is(":animated")) {
-						if ($li.is(".open")) {
-							$li.removeClass("opening");
-							$ul.animate(
-								{
-									height : 0
-								},
-								"fast",
-								"linear",
-								function () {
-									$li.removeClass("open");
-									$(this).attr("style","");
-								}
-							);
-						} else {
-							$li.addClass("opening");
-							$ul.css(
-								{
-									height : 0,
-									position : "static",
-									left : "auto"
-								}
-							).animate(
-								{
-									height : visHeight
-								},
-								"fast",
-								"linear",
-								function () {
-									$li.addClass("open");
-									$(this).attr("style","");
-								}
-							);
-						}
-					}
+					$li.is(".closed") ? root.showSubmenuMobile($ul) : root.hideSubmenuMobile($ul);
 				}
 			)
 	;
@@ -216,6 +179,10 @@ Gardenburger.prototype.init = function () {
 			root.positionMenus()
 		}
 	);
+	
+	// Start the nav hidden in mobile.
+	
+	root.e.addClass("mobileHide");
 
 
 	// Remove focus from menu items so the dropdowns
@@ -227,52 +194,291 @@ Gardenburger.prototype.init = function () {
 		function () {
 			root.e.find(":focus").blur();
 		}
-	)
+	);
+	
+}
+
+
+
+Gardenburger.prototype.showSubmenuMobile = function ($menu) {
+	var
+		root = this,
+		visHeight = $menu.outerHeight(),
+		animationEvent = whichAnimationEvent()
+	;
+
+	if (!$menu.data("animating")) {
+		$menu
+				// Turn on the flag that prevents animations
+				// from interrupting each other or queuing up.
+				// This ensures this animation will complete.
+				.data("animating", true)
+
+				// Set a fixed height equal to its current height
+				// so the transition has a "to" point.
+				.css("height", visHeight)
+
+				// Add the class that styles the opening
+				// section so its transition will start and
+				// take place at the same time as the opening
+				// animation below. (This class controls the
+				// shading of the submenu and the flipping
+				// of the submenu indicator arrow.)
+				.closest("li")
+						.addClass("opening")
+						.removeClass("closed")
+						.end()
+
+				// Animates the height from 0 to the inline
+				// height we specified above.
+				.addClass("animateHeightToInline")
+
+				// Once the animation finishes...
+				.one(
+					animationEvent,
+					function () {
+						$menu
+								// Remove the fixed inline
+								// height that was added to
+								// give the transition a "to"
+								// point. If we need it later
+								// we'll measure anew since we
+								// always want the current height
+								// anyway (it might change if
+								// submenus are expanded/closed).
+								.attr("style","")
+								
+								// We don't need the class that
+								// animates it anymore.
+								.removeClass("animateHeightToInline")
+
+								// Turn off the flag that prevents
+								// animations from interrupting
+								// each other or queuing up.
+								.data("animating", false)
+						;
+					}
+				)
+		;
+	}
+}
+
+
+
+Gardenburger.prototype.hideSubmenuMobile = function ($menu) {
+	var
+		root = this,
+		visHeight = $menu.outerHeight(),
+		transitionEvent = whichTransitionEvent()
+	;
+
+	if (!$menu.data("animating")) {
+		$menu
+				// Turn on the flag that prevents animations
+				// from interrupting each other or queuing up.
+				// This ensures this animation will complete.
+				.data("animating", true)
+
+				// Remove the class that styles the open
+				// section so its transition will start and
+				// take place at the same time as the closing
+				// animation below. (This class controls the
+				// shading of the submenu and the flipping
+				// of the submenu indicator arrow.)
+				.closest("li")
+						.removeClass("opening")
+						.end()
+				
+				// Set a fixed height equal to its current height
+				// so the transition has a "from" point, since we
+				// can't tell it to transition from "whatever the
+				// current unknown value is."
+				.css("height", visHeight)
+		;
+
+		// Removing this breaks the transition. Whyyyyyy???
+		console.log($menu.css("height"));
+
+		$menu
+				// Begin the transition to 0 height
+				.addClass("height0")
+
+				// Once the transition finishes...
+				.one(
+					transitionEvent,
+					function () {
+						$menu
+								// Remove the fixed inline
+								// height that was added to
+								// give the transition a "from"
+								// point. If we need it later
+								// we'll measure anew since we
+								// always want the current height
+								// anyway (it might change if
+								// submenus are expanded/closed).
+								.attr("style","")
+
+								// Hide the menu offscreen now
+								// that it's done animating
+								.closest("li")
+										.addClass("closed")
+										.end()
+								
+								// Now that the menu is offscreen
+								// we can get rid of the class
+								// that set the height to 0. We
+								// want it to have an accurate
+								// open state height so that it
+								// will be measurable next time.
+								.removeClass("height0")
+								
+								// Turn off the flag that prevents
+								// animations from interrupting
+								// each other or queuing up.
+								.data("animating", false)
+						;
+					}
+				)
+		;
+	}
 }
 
 
 
 Gardenburger.prototype.showMenuMobileInline = function () {
-	var root = this;
-	var $navList = root.e.children("ul:last");
-	var visHeight = $navList.outerHeight();
+	var
+		root = this,
+		$nav = this.e.children("ul:last"),
+		visHeight = $nav.outerHeight(),
+		animationEvent = whichAnimationEvent()
+	;
+	
+	if (!$nav.data("animating")) {
+		
+		// Begin the burger's animation to an X
+		root.e.find(".burger").addClass("ex");
+		
+		$nav
+				// Turn on the flag that prevents animations
+				// from interrupting each other or queuing up.
+				// This ensures this animation will complete.
+				.data("animating", true)
 
-	!$navList.is(":animated") && root.e.find(".burger").addClass("ex").end().find($navList).css(
-		{
-			height : 0,
-			position : "static",
-			left : "auto"
-		}
-	).animate(
-		{
-			height : visHeight
-		},
-		"fast",
-		"linear",
-		function () {
-			root.e.addClass("mobileShow");
-			$(this).attr("style","");
-		}
-	);
+				// Set a fixed height equal to its current height
+				// so the transition has a "to" point.
+				.css("height", visHeight)
+
+				// Bring the nav onscreen.
+				.closest(root.e)
+						.removeClass("mobileHide")
+						.end()
+
+				// Animates the height from 0 to the inline
+				// height we specified above.				
+				.addClass("animateHeightToInline")
+				
+				// Once the animation finishes...
+				.one(
+					animationEvent,
+					function () {
+						$nav
+								// Remove the fixed inline
+								// height that was added to
+								// give the transition a "to"
+								// point. If we need it later
+								// we'll measure anew since we
+								// always want the current height
+								// anyway (it might change if
+								// submenus are expanded/closed).
+								.attr("style","")
+
+								// We don't need the class that
+								// animates it anymore.
+								.removeClass("animateHeightToInline")
+
+								// Turn off the flag that prevents
+								// animations from interrupting
+								// each other or queuing up.
+								.data("animating", false)
+						;
+					}
+				)
+		;		
+	}
 }
 
 
 
 Gardenburger.prototype.hideMenuMobileInline = function () {
-	var root = this;
-	var $navList = root.e.children("ul:last");
+	var
+		root = this,
+		$nav = this.e.children("ul:last"),
+		visHeight = $nav.outerHeight(),
+		transitionEvent = whichTransitionEvent()
+	;
 
-	!$navList.is(":animated") && root.e.find(".burger").removeClass("ex").end().find($navList).animate(
-		{
-			height : 0
-		},
-		"fast",
-		"linear",
-		function () {
-			root.e.removeClass("mobileShow");
-			$(this).attr("style","");
-		}
-	)
+	if (!$nav.data("animating")) {
+
+		// Begin the burger's animation from an X
+		root.e.find(".burger").removeClass("ex");
+		
+		$nav
+				// Turn on the flag that prevents animations
+				// from interrupting each other or queuing up.
+				// This ensures this animation will complete.
+				.data("animating", true)
+				
+				// Set a fixed height equal to its current height
+				// so the transition has a "from" point, since we
+				// can't tell it to transition from "whatever the
+				// current unknown value is."
+				.css("height", visHeight)
+		;
+		
+		// Removing this breaks the transition. Whyyyyyy???
+		console.log($nav.css("height"));
+
+		$nav
+				// Begin the transition to 0 height
+				.addClass("height0")
+
+				// Once the transition finishes...
+				.one(
+					transitionEvent,
+					function () {
+						
+						// Hide the nav offscreen now
+						// that it's done animating.
+						root.e.addClass("mobileHide");
+
+						$nav
+								// Remove the fixed inline
+								// height that was added to
+								// give the transition a "from"
+								// point. If we need it later
+								// we'll measure anew since we
+								// always want the current height
+								// anyway (it might change if
+								// submenus are expanded/closed).
+								.attr("style","")
+
+								// Now that the nav is offscreen
+								// we can get rid of the class
+								// that set the height to 0. We
+								// want it to have an accurate
+								// open state height so that it
+								// will be measurable next time.
+								.removeClass("height0")
+								
+								// Turn off the flag that prevents
+								// animations from interrupting
+								// each other or queuing up.
+								.data("animating", false)
+						;
+					}
+				)
+		;
+	}
 }
 
 
@@ -283,7 +489,7 @@ Gardenburger.prototype.positionMenus = function () {
 	this.e
 
 			// Reset previously flipped menus.
-			.find("ul")
+			.find(".flip")
 					.removeClass("flip")
 					.end()
 
@@ -336,26 +542,68 @@ Gardenburger.prototype.positionMenus = function () {
 					// They just get flipped if there isn't 
 					// enough room for them.
 					.find("ul")
-							.each(function(){
-								var $parentMenu = $(this).parents("ul").first();
-
-								$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
-
-								if ($(this).data("visiblePosX") + $(this).outerWidth() > $(window).width()) {
-									$(this).addClass("flip");
-									$(this).data("visiblePosX", $parentMenu.data("visiblePosX") - $(this).outerWidth());
-								} else {
-									$(this).removeClass("flip");
+							.each(
+								function () {
+									var $parentMenu = $(this).parents("ul").first();
+	
 									$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
+	
+									if ($(this).data("visiblePosX") + $(this).outerWidth() > $(window).width()) {
+										$(this).addClass("flip");
+										$(this).data("visiblePosX", $parentMenu.data("visiblePosX") - $(this).outerWidth());
+									} else {
+										$(this).removeClass("flip");
+										$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
+									}
+	
 								}
-
-							})
+							)
 	;
 }
 
 
 
+/* From Modernizr */
+function whichAnimationEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var animations = {
+		'animation':'animationend',
+		'OAnimation':'oAnimationEnd',
+		'MozAnimation':'animationend',
+		'WebkitAnimation':'webkitAnimationEnd'
+    }
 
+    for (t in animations) {
+        if ( el.style[t] !== undefined ) {
+            return animations[t];
+        }
+    }
+}
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+		'transition':'transitionend',
+		'OTransition':'oTransitionEnd',
+		'MozTransition':'transitionend',
+		'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for (t in transitions) {
+        if ( el.style[t] !== undefined ) {
+            return transitions[t];
+        }
+    }
+}
+
+
+
+
+// Plugin for ease of instantiation.
+// Priority is on options passed in
+// argument followed by those in HTML
+// attribute.
 $.fn.gardenburger = function (options) {
 
     return this.each(
@@ -370,3 +618,17 @@ $.fn.gardenburger = function (options) {
 	);
 
 };
+
+
+
+
+// Auto-instantiation based on HTML attributes
+$(
+	function () {
+		$("[data-gardenburger]").each(
+			function () {
+				$(this).gardenburger();
+			}
+		);		
+	}
+);

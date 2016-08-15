@@ -60,6 +60,23 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 
 
 
+.animateHeightToInline {
+  -webkit-animation: heightToInline 0.15s linear;
+  -moz-animation: heightToInline 0.15s linear;
+  -o-animation: heightToInline 0.15s linear;
+  -ms-animation: heightToInline 0.15s linear;
+  animation: heightToInline 0.15s linear;
+  overflow: hidden;
+}
+.height0 {
+  -webkit-transition: height 0.15s linear !important;
+  -moz-transition: height 0.15s linear !important;
+  -o-transition: height 0.15s linear !important;
+  -ms-transition: height 0.15s linear !important;
+  transition: height 0.15s linear !important;
+  height: 0 !important;
+  overflow: hidden;
+}
 body > header > nav {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -94,7 +111,7 @@ body > header > nav ul li.opening {
   -o-transition: background 0.2s linear;
   -ms-transition: background 0.2s linear;
   transition: background 0.2s linear;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.04);
 }
 @media (min-width: 800px) {
   body > header > nav ul li.opening {
@@ -102,7 +119,7 @@ body > header > nav ul li.opening {
   }
 }
 body > header > nav ul li a {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.04);
 }
 @media (min-width: 800px) {
   body > header > nav ul li a {
@@ -125,7 +142,7 @@ body > header > nav ul li.hasChildMenu .submenuTogglers {
   appearance: none;
   padding: 0;
   border: none;
-  background: rgba(0,0,0,0.07);
+  background: rgba(0,0,0,0.08);
 }
 body > header > nav ul li.hasChildMenu .submenuTogglers:focus {
   outline: none;
@@ -507,17 +524,12 @@ body > header > nav .burger.ex a i:last-child {
     transition: right 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
 }
-body > header > nav li ul {
-  position: absolute;
-  left: -999em;
-  top: auto;
-  height: auto;
-  overflow: visible;
-  width: 100%;
-}
 @media (min-width: 800px) {
   body > header > nav li ul {
+    position: absolute;
+    left: -999em;
     top: auto;
+    width: 100%;
     height: auto !important;
     overflow: visible !important;
     opacity: 0.01;
@@ -526,19 +538,14 @@ body > header > nav li ul {
   }
 }
 @media (max-width: 799px) {
-  body > header > nav li.open > ul {
-    position: static;
-    left: auto;
-  }
-}
-@media (max-width: 799px) {
-  body > header > nav > ul {
+  body > header > nav li.closed > ul,
+  body > header > nav.mobileHide > ul {
     position: absolute;
     left: -999em;
-  }
-  body > header > nav.mobileShow > ul {
-    position: static;
-    left: auto;
+    top: auto;
+    height: auto;
+    overflow: visible;
+    width: 100%;
   }
 }
 @media (min-width: 800px) {
@@ -591,5 +598,30 @@ body > header > nav li ul {
 @media (min-width: 800px) {
   .burger {
     display: none;
+  }
+}
+@-moz-keyframes heightToInline {
+  0% {
+    height: 0;
+  }
+}
+@-webkit-keyframes heightToInline {
+  0% {
+    height: 0;
+  }
+}
+@-o-keyframes heightToInline {
+  0% {
+    height: 0;
+  }
+}
+@-ms-keyframes heightToInline {
+  0% {
+    height: 0;
+  }
+}
+@keyframes heightToInline {
+  0% {
+    height: 0;
   }
 }
