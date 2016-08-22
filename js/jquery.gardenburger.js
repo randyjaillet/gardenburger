@@ -15,7 +15,7 @@
 window.gardenburgers = [];
 
 var Gardenburger = function ($e, options) {
-	
+
 	options = options || {};
 
 	// If options is a string (as it is when taken from
@@ -31,11 +31,11 @@ var Gardenburger = function ($e, options) {
 	);
 
 	window.gardenburgers.push(this);
-	
+
 	var root = this;
 	this.i = $(window.gardenburgers).index(this);
 	this.e = $e;
-	
+
 	this.init();
 	
 }
