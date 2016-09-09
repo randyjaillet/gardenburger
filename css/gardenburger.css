@@ -119,18 +119,24 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
   list-style: none;
   text-align: left;
 }
-[data-gardenburger] ul li a {
+[data-gardenburger] ul li a,
+[data-gardenburger] ul li .linkless-nav-item {
   display: block;
   line-height: 20px;
   text-decoration: none;
 }
-[data-gardenburger] ul li a:focus {
+[data-gardenburger] ul li a:focus,
+[data-gardenburger] ul li .linkless-nav-item:focus {
   outline: none;
 }
-[data-gardenburger] ul li ul li a {
+[data-gardenburger] ul li .linkless-nav-item {
+  cursor: default;
+}
+[data-gardenburger] ul li ul li a,
+[data-gardenburger] ul li ul li .linkless-nav-item {
   font-size: 85%;
 }
-@media (max-width: 799px) {
+@media (max-width: 99px) {
   [data-gardenburger] ul li {
     margin-top: 1px;
     -webkit-transition: background 0.2s linear;
@@ -139,7 +145,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: background 0.2s linear;
     transition: background 0.2s linear;
   }
-  [data-gardenburger] ul li a {
+  [data-gardenburger] ul li a,
+  [data-gardenburger] ul li .linkless-nav-item {
     padding: 20px 20px;
     color: #444;
     background: rgba(0,0,0,0.04);
@@ -166,7 +173,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
-  [data-gardenburger] ul li.hasChildMenu > a {
+  [data-gardenburger] ul li.hasChildMenu > a,
+  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -235,16 +243,20 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-flex: 1 1 100%;
     flex: 1 1 100%;
   }
-  [data-gardenburger] ul li ul li a {
+  [data-gardenburger] ul li ul li a,
+  [data-gardenburger] ul li ul li .linkless-nav-item {
     padding-left: 30px;
   }
-  [data-gardenburger] ul li ul li ul li a {
+  [data-gardenburger] ul li ul li ul li a,
+  [data-gardenburger] ul li ul li ul li .linkless-nav-item {
     padding-left: 40px;
   }
-  [data-gardenburger] ul li ul li ul li ul li a {
+  [data-gardenburger] ul li ul li ul li ul li a,
+  [data-gardenburger] ul li ul li ul li ul li .linkless-nav-item {
     padding-left: 50px;
   }
-  [data-gardenburger] ul li ul li ul li ul li ul li a {
+  [data-gardenburger] ul li ul li ul li ul li ul li a,
+  [data-gardenburger] ul li ul li ul li ul li ul li .linkless-nav-item {
     padding-left: 60px;
   }
   [data-gardenburger] > ul {
@@ -312,11 +324,12 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transform: rotate(-45deg);
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] {
     font-size: inherit;
   }
-  [data-gardenburger] ul li a {
+  [data-gardenburger] ul li a,
+  [data-gardenburger] ul li .linkless-nav-item {
     -webkit-transition: color 0.5s linear, background-color 0.5s linear;
     -moz-transition: color 0.5s linear, background-color 0.5s linear;
     -o-transition: color 0.5s linear, background-color 0.5s linear;
@@ -327,7 +340,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     color: #444;
   }
   [data-gardenburger] ul li:hover > a,
-  [data-gardenburger] ul li.focus > a {
+  [data-gardenburger] ul li.focus > a,
+  [data-gardenburger] ul li:hover > .linkless-nav-item,
+  [data-gardenburger] ul li.focus > .linkless-nav-item {
     outline: none;
     background-color: rgba(0,0,0,0.03);
     -webkit-transition: color 0.5s linear, background-color 0.5s linear;
@@ -336,10 +351,12 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: color 0.5s linear, background-color 0.5s linear;
     transition: color 0.5s linear, background-color 0.5s linear;
   }
-  [data-gardenburger] ul li.hasChildMenu > a {
+  [data-gardenburger] ul li.hasChildMenu > a,
+  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item {
     padding-right: 30px;
   }
-  [data-gardenburger] ul li.hasChildMenu > a:after {
+  [data-gardenburger] ul li.hasChildMenu > a:after,
+  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item:after {
     content: '';
     display: inline-block;
     position: absolute;
@@ -357,7 +374,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: border-left-color 0.5s linear, transform 0.5s linear;
   }
   [data-gardenburger] ul li.hasChildMenu:hover > a:after,
-  [data-gardenburger] ul li.hasChildMenu.focus > a:after {
+  [data-gardenburger] ul li.hasChildMenu.focus > a:after,
+  [data-gardenburger] ul li.hasChildMenu:hover > .linkless-nav-item:after,
+  [data-gardenburger] ul li.hasChildMenu.focus > .linkless-nav-item:after {
     -webkit-transition: -webkit-transform 0.5s linear;
     -moz-transition: -moz-transform 0.5s linear;
     -o-transition: -o-transform 0.5s linear;
@@ -385,12 +404,15 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     padding: 0;
     text-align: left;
   }
-  [data-gardenburger] ul li ul li.hasChildMenu > a:after {
+  [data-gardenburger] ul li ul li.hasChildMenu > a:after,
+  [data-gardenburger] ul li ul li.hasChildMenu > .linkless-nav-item:after {
     border-left-color: #444;
     border-top-color: transparent;
   }
   [data-gardenburger] ul li ul li.hasChildMenu:hover > a:after,
-  [data-gardenburger] ul li ul li.hasChildMenu.focus > a:after {
+  [data-gardenburger] ul li ul li.hasChildMenu.focus > a:after,
+  [data-gardenburger] ul li ul li.hasChildMenu:hover > .linkless-nav-item:after,
+  [data-gardenburger] ul li ul li.hasChildMenu.focus > .linkless-nav-item:after {
     -webkit-transform: translateX(5px) translateY(0);
     -moz-transform: translateX(5px) translateY(0);
     -o-transform: translateX(5px) translateY(0);
@@ -504,7 +526,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: right 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] li ul {
     position: absolute;
     left: -999em;
@@ -517,7 +539,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     filter: alpha(opacity=1);
   }
 }
-@media (max-width: 799px) {
+@media (max-width: 99px) {
   [data-gardenburger] li.closed > ul,
   [data-gardenburger].mobileHide > ul {
     position: absolute;
@@ -528,7 +550,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     width: 100%;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] li.focus > ul,
   [data-gardenburger] li:hover > ul,
   [data-gardenburger] li.focus > .menuPositioningWrapper > ul,
@@ -544,7 +566,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     left: 0;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] li li.focus > ul,
   [data-gardenburger] li li:hover > ul,
   [data-gardenburger] li li.focus > .menuPositioningWrapper > ul,
@@ -552,13 +574,13 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     left: 100%;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] li ul.flip {
     left: auto;
     right: 99999em;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] li.focus > ul.flip,
   [data-gardenburger] li:hover > ul.flip,
   [data-gardenburger] li.focus > .menuPositioningWrapper > ul.flip,
@@ -567,7 +589,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     right: 100%;
   }
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] .submenuTogglers {
     display: none !important;
   }
@@ -575,7 +597,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 [data-gardenburger] .burger {
   display: block;
 }
-@media (min-width: 800px) {
+@media (min-width: 100px) {
   [data-gardenburger] .burger {
     display: none;
   }

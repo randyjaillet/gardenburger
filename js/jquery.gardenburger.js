@@ -1,5 +1,5 @@
 /*
-** A gracefully degrading, mobile-first navigation jQuery plugin.
+** A mobile-first navigation jQuery plugin.
 ** 
 ** Gardenburger turns navigation lists into dynamic dropdowns and
 ** flyouts. These menus are all keyboard accessible. Gardenburger
@@ -89,14 +89,14 @@ Gardenburger.prototype.init = function () {
 			
 			.on(
 				"touchend",
-				"li.hasChildMenu > a",
+				"li.hasChildMenu > a, li.hasChildMenu > .linkless-nav-item",
 				function (e) {
 					if (root.settings.sectionParentsAreActive) {
 						if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
 							e.preventDefault();
 	
 							$(e.target).data("tappedOnce",true);
-		
+
 							$(document).on(
 								"touchstart.tapCountReset" + root.i,
 								function (e2) {
@@ -128,6 +128,19 @@ Gardenburger.prototype.init = function () {
 					}
 				}
 			)
+			
+			
+			// If a nav item is linkless, trigger opening
+			// the submenu on click.
+			
+			.on(
+				"click",
+				"li.hasChildMenu > .linkless-nav-item",
+				function (e) {
+					e.preventDefault();
+					$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
+				}
+			)
 
 
 			// Apply click event handling to the mobile
@@ -151,7 +164,7 @@ Gardenburger.prototype.init = function () {
 			.find("li.hasChildMenu")
 					.each(
 						function (i, el) {
-			    			$(this).children("a").after("<button class=\"submenuTogglers\"><i></i></button>");
+			    			$(this).children("a, .linkless-nav-item").after("<button class=\"submenuTogglers\"><i></i></button>");
 			    		}
 			    	)
 			    	.end() // Back to context
@@ -515,9 +528,9 @@ Gardenburger.prototype.positionMenus = function () {
 							;
 
 							if ($(this).closest(".menuPositioningWrapper").length) {
-								siblingLinkOffsetLeft = $(this).closest(".menuPositioningWrapper").prevAll("a").offset().left;
+								siblingLinkOffsetLeft = $(this).closest(".menuPositioningWrapper").prevAll("a, .linkless-nav-item").offset().left;
 							} else {
-								siblingLinkOffsetLeft = $(this).prevAll("a").offset().left;
+								siblingLinkOffsetLeft = $(this).prevAll("a, .linkless-nav-item").offset().left;
 							}
 
 							$(this).data("visiblePosX", siblingLinkOffsetLeft);
