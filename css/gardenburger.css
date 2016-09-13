@@ -213,7 +213,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
   }
   [data-gardenburger] ul li.hasChildMenu .submenuTogglers i,
   [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers i {
-    display: block;
+    display: inline-block;
     -webkit-transform-origin: center 20%;
     -moz-transform-origin: center 20%;
     -o-transform-origin: center 20%;
@@ -586,8 +586,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -webkit-justify-content: center;
     justify-content: center;
   }
-  [data-gardenburger] li ul,
-  [data-gardenburger] li .dropdown {
+  [data-gardenburger] li:not(.not-hoverable) ul,
+  [data-gardenburger] li:not(.not-hoverable) .dropdown {
 /*
 			Hoverintent delay => Fade out and slide up => Position offscreen
 
@@ -604,10 +604,31 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: opacity 0.2s linear 0.2s, -ms-transform 0.2s ease-out 0.2s, left 0s linear 0.45s;
     transition: opacity 0.2s linear 0.2s, transform 0.2s ease-out 0.2s, left 0s linear 0.45s;
   }
+  [data-gardenburger] li.not-hoverable ul,
+  [data-gardenburger] li.not-hoverable .dropdown {
+/*
+			Fade out and slide up => Position offscreen
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5
+								|	|	|	|	|	|	|	|	|	|	|
+			opacity fade out	|---------------*
+			translateY fade out |---------------*
+			left out 			|					*
+			*/
+    -webkit-transition: opacity 0.2s linear, -webkit-transform 0.2s ease-out, left 0s linear 0.25s;
+    -moz-transition: opacity 0.2s linear, -moz-transform 0.2s ease-out, left 0s linear 0.25s;
+    -o-transition: opacity 0.2s linear, -o-transform 0.2s ease-out, left 0s linear 0.25s;
+    -ms-transition: opacity 0.2s linear, -ms-transform 0.2s ease-out, left 0s linear 0.25s;
+    transition: opacity 0.2s linear, transform 0.2s ease-out, left 0s linear 0.25s;
+  }
   [data-gardenburger] li.focus > ul,
   [data-gardenburger] li.focus > .menuPositioningWrapper > ul,
   [data-gardenburger] li.focus > .dropdown,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > .dropdown {
+  [data-gardenburger] li.focus > .menuPositioningWrapper > .dropdown,
+  [data-gardenburger] li.locked-active > ul,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > ul,
+  [data-gardenburger] li.locked-active > .dropdown,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > .dropdown {
 /*
 			Fade in and slide down immediately (no hoverintent delay)
 
@@ -622,10 +643,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: -ms-transform 0.2s ease-out 0s, opacity 0.2s linear 0s;
     transition: transform 0.2s ease-out 0s, opacity 0.2s linear 0s;
   }
-  [data-gardenburger] li:hover > ul,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul,
-  [data-gardenburger] li:hover > .dropdown,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > .dropdown {
+  [data-gardenburger] li:hover:not(.not-hoverable) > ul,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > ul,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .dropdown,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > .dropdown {
 /*
 			Hoverintent delay => Position onscreen => Slide down and fade in
 	
@@ -642,8 +663,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: left 0s linear 0.2s, -ms-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     transition: left 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
-  [data-gardenburger] li ul.flip,
-  [data-gardenburger] li .dropdown.flip {
+  [data-gardenburger] li:not(.not-hoverable) ul.flip,
+  [data-gardenburger] li:not(.not-hoverable) .dropdown.flip {
 /*
 			Hoverintent delay => Fade out and slide up => Position offscreen
 
@@ -660,14 +681,14 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: opacity 0.2s linear 0.2s, -ms-transform 0.2s ease-out 0.2s, right 0s linear 0.45s;
     transition: opacity 0.2s linear 0.2s, transform 0.2s ease-out 0.2s, right 0s linear 0.45s;
   }
-  [data-gardenburger] li.focus > ul.flip,
-  [data-gardenburger] li:hover > ul.flip,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > ul.flip,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul.flip,
-  [data-gardenburger] li.focus > .dropdown.flip,
-  [data-gardenburger] li:hover > .dropdown.flip,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > .dropdown.flip,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > .dropdown.flip {
+  [data-gardenburger] li.focus:not(.not-hoverable) > ul.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > ul.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .dropdown.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .dropdown.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > .dropdown.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > .dropdown.flip {
     -webkit-transition: right 0s linear 0.2s, -webkit-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     -moz-transition: right 0s linear 0.2s, -moz-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     -o-transition: right 0s linear 0.2s, -o-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
