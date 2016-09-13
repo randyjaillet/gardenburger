@@ -24,8 +24,7 @@ var Gardenburger = function ($e, options) {
 
 	this.settings = $.extend(
 		{
-	    	breakpoint				: 800,
-	    	sectionParentsAreActive	: true
+	    	breakpoint				: 800
 		},
 		options
 	);
@@ -56,7 +55,7 @@ Gardenburger.prototype.init = function () {
 
 			.on(
     			"focus",
-    			"a",
+    			"a, input",
     			function (e) {
 					$(e.target).parents("li").addClass("focus");
 					$(e.target).trigger("bubblyfocus");
@@ -64,7 +63,7 @@ Gardenburger.prototype.init = function () {
 			)
 			.on(
     			"blur",
-    			"a",
+    			"a, input",
     			function(e){
 					$(e.target).parents("li").removeClass("focus");
 				}
@@ -74,11 +73,28 @@ Gardenburger.prototype.init = function () {
 			// Since a parent selector (:has()?) in CSS
 			// is currently a distant fantasy, apply a
 			// class to LIs that contain submenus. Close
-			// them for initial state.
+			// them for initial state unless they're set
+			// to be visible on the surface in mobile with
+			// the respective class.
 
-			.find("li:has(ul)")
-					.addClass("hasChildMenu closed")
+			.find("li:has(ul), li:has(.dropdown)")
+					.addClass("hasChildMenu")
+					.not($(".surface-visible-in-mobile"))
+							.addClass("closed")
+							.end()
 					.end() // Back to context
+
+
+			// Inject togglers for hiding/showing sub
+			// menus in mobile mode.
+
+			.find("li.hasChildMenu:not(.surface-visible-in-mobile)")
+					.each(
+						function (i, el) {
+			    			$(this).children("a, .linkless-nav-item").after("<button class=\"submenuTogglers\"><i></i></button>");
+			    		}
+			    	)
+			    	.end() // Back to context
 
 
 			// Touch handling
@@ -89,56 +105,55 @@ Gardenburger.prototype.init = function () {
 			
 			.on(
 				"touchend",
-				"li.hasChildMenu > a, li.hasChildMenu > .linkless-nav-item",
+				"li.hasChildMenu > a",
 				function (e) {
-					if (root.settings.sectionParentsAreActive) {
-						if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
-							e.preventDefault();
-	
-							$(e.target).data("tappedOnce",true);
+					if (!$(e.target).data("tappedOnce") && $(window).width() >= root.settings.breakpoint) {
+						e.preventDefault();
 
-							$(document).on(
-								"touchstart.tapCountReset" + root.i,
-								function (e2) {
-									if ( !$(e2.target).is($(e.target)) && !$(e2.target).closest($(e.target)).length ) {
-										$(e.target).data("tappedOnce",false).blur();
-										root.e.off("touchstart.tapCountReset" + root.i);
-									}
+						$(e.target).data("tappedOnce",true);
+
+						$(document).on(
+							"touchstart.tapCountReset" + root.i,
+							function (e2) {
+								if ( !$(e2.target).is($(e.target)) && !$(e2.target).closest($(e.target)).length ) {
+									$(e.target).data("tappedOnce",false).blur();
+									root.e.off("touchstart.tapCountReset" + root.i);
 								}
-							);
-	
-						}
+							}
+						);
+
 					}
 				}
 			)
 			
 			
-			// If section parents are set to be inactive,
-			// disable their click behavior on desktop
-			// mode. In mobile mode, trigger opening the
+			// If there's a custom click handler on the
+			// nav item or it is linkless, trigger the
+			// corresponding behavior and opening the
 			// submenu on click.
 			
 			.on(
 				"click",
-				"li.hasChildMenu > a",
+				"[data-click-handler], .linkless-nav-item",
 				function (e) {
-					if (!root.settings.sectionParentsAreActive) {
-						e.preventDefault();
-						$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
+					e.preventDefault();
+					$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
+					if ($(e.target).data("click-handler") == "focus-child") {
+						$(e.target).closest("li").children("ul, .dropdown").find("a, input").eq(0).focus();
 					}
 				}
 			)
 			
 			
-			// If a nav item is linkless, trigger opening
-			// the submenu on click.
+			// If a nav item is clicked that isn't hoverable,
+			// we must apply a class to lock the submenu's
+			// visibility.
 			
 			.on(
 				"click",
-				"li.hasChildMenu > .linkless-nav-item",
+				"li.hasChildMenu.not-hoverable > a, li.hasChildMenu.not-hoverable > .linkless-nav-item",
 				function (e) {
-					e.preventDefault();
-					$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
+					$(window).width() >= root.settings.breakpoint && $(e.target).closest("li").addClass("locked-active");
 				}
 			)
 
@@ -156,28 +171,15 @@ Gardenburger.prototype.init = function () {
 				}
 			)
 
-
-			// Inject togglers for hiding/showing sub
-			// menus in mobile mode and attach their
-			// event handlers.
-
-			.find("li.hasChildMenu")
-					.each(
-						function (i, el) {
-			    			$(this).children("a, .linkless-nav-item").after("<button class=\"submenuTogglers\"><i></i></button>");
-			    		}
-			    	)
-			    	.end() // Back to context
-
 			.on(
 				"click",
 				".submenuTogglers",
 				function (e) {
 					var $li = $(e.target).closest("li");
-					var $ul = $li.children("ul").eq(0);
+					var $submenu = $li.children("ul, .dropdown").eq(0);
 					e.preventDefault();
 
-					$li.is(".closed") ? root.showSubmenuMobile($ul) : root.hideSubmenuMobile($ul);
+					$li.is(".closed") ? root.showSubmenuMobile($submenu) : root.hideSubmenuMobile($submenu);
 				}
 			)
 	;
@@ -204,10 +206,25 @@ Gardenburger.prototype.init = function () {
 
 	$(document).on(
 		"touchstart",
-		function () {
+		function (e) {
+			root.e.find(".locked-active").not($(e.target).parents()).removeClass("locked-active");
 			root.e.find(":focus").blur();
 		}
 	);
+
+
+	// Remove the visibility-locking classes when
+	// clicking on the document outside the locked
+	// menu. These classes are applied when a menu
+	// is not "hoverable" but has been activated
+	// with a click.
+	
+	$(document).on(
+		"click",
+		function (e) {
+			root.e.find(".locked-active").not($(e.target).parents()).removeClass("locked-active");
+		}
+	)
 	
 }
 
@@ -520,7 +537,7 @@ Gardenburger.prototype.positionMenus = function () {
 			// We're storing the horizontal position at which
 			// menus would be if they were visible in the
 			// "visiblePosX" data key.
-			.find("ul:first > li > ul, ul:first > li > .menuPositioningWrapper > ul")
+			.find("ul:first > li > ul, ul:first > li > .menuPositioningWrapper > ul, ul:first > li > .dropdown, ul:first > li > .menuPositioningWrapper > .dropdown")
 					.each(
 						function () {
 							var neededOffsetRight,
@@ -554,10 +571,10 @@ Gardenburger.prototype.positionMenus = function () {
 					// Go through third-and-deeper-level menus.
 					// They just get flipped if there isn't 
 					// enough room for them.
-					.find("ul")
+					.find("ul, .dropdown")
 							.each(
 								function () {
-									var $parentMenu = $(this).parents("ul").first();
+									var $parentMenu = $(this).parents("ul, .dropdown").first();
 	
 									$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
 	

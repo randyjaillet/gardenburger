@@ -136,8 +136,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 [data-gardenburger] ul li ul li .linkless-nav-item {
   font-size: 85%;
 }
-@media (max-width: 99px) {
-  [data-gardenburger] ul li {
+@media (max-width: 799px) {
+  [data-gardenburger] ul li,
+  [data-gardenburger] .dropdown li {
     margin-top: 1px;
     -webkit-transition: background 0.2s linear;
     -moz-transition: background 0.2s linear;
@@ -146,12 +147,15 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: background 0.2s linear;
   }
   [data-gardenburger] ul li a,
-  [data-gardenburger] ul li .linkless-nav-item {
+  [data-gardenburger] .dropdown li a,
+  [data-gardenburger] ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .linkless-nav-item {
     padding: 20px 20px;
     color: #444;
     background: rgba(0,0,0,0.04);
   }
-  [data-gardenburger] ul li.opening {
+  [data-gardenburger] ul li.opening,
+  [data-gardenburger] .dropdown li.opening {
     -webkit-transition: background 0.2s linear;
     -moz-transition: background 0.2s linear;
     -o-transition: background 0.2s linear;
@@ -159,7 +163,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: background 0.2s linear;
     background: rgba(0,0,0,0.04);
   }
-  [data-gardenburger] ul li.hasChildMenu {
+  [data-gardenburger] ul li.hasChildMenu,
+  [data-gardenburger] .dropdown li.hasChildMenu {
     display: -webkit-box;
     display: -moz-box;
     display: -webkit-flex;
@@ -174,7 +179,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     flex-wrap: wrap;
   }
   [data-gardenburger] ul li.hasChildMenu > a,
-  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item {
+  [data-gardenburger] .dropdown li.hasChildMenu > a,
+  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item,
+  [data-gardenburger] .dropdown li.hasChildMenu > .linkless-nav-item {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -184,7 +191,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     flex: 1 1 1px;
     margin-right: 1px;
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers {
+  [data-gardenburger] ul li.hasChildMenu .submenuTogglers,
+  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -199,10 +207,12 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     border: none;
     background: rgba(0,0,0,0.08);
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers:focus {
+  [data-gardenburger] ul li.hasChildMenu .submenuTogglers:focus,
+  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers:focus {
     outline: none;
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers i {
+  [data-gardenburger] ul li.hasChildMenu .submenuTogglers i,
+  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers i {
     display: block;
     -webkit-transform-origin: center 20%;
     -moz-transform-origin: center 20%;
@@ -222,7 +232,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     width: 0;
     height: 0;
   }
-  [data-gardenburger] ul li.hasChildMenu.opening > .submenuTogglers i {
+  [data-gardenburger] ul li.hasChildMenu.opening > .submenuTogglers i,
+  [data-gardenburger] .dropdown li.hasChildMenu.opening > .submenuTogglers i {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);
@@ -234,7 +245,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: -ms-transform 0.25s linear;
     transition: transform 0.25s linear;
   }
-  [data-gardenburger] ul li.hasChildMenu > ul {
+  [data-gardenburger] ul li.hasChildMenu > ul,
+  [data-gardenburger] .dropdown li.hasChildMenu > ul,
+  [data-gardenburger] ul li.hasChildMenu > .dropdown,
+  [data-gardenburger] .dropdown li.hasChildMenu > .dropdown {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -244,19 +258,131 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     flex: 1 1 100%;
   }
   [data-gardenburger] ul li ul li a,
-  [data-gardenburger] ul li ul li .linkless-nav-item {
+  [data-gardenburger] .dropdown li ul li a,
+  [data-gardenburger] ul li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li a,
+  [data-gardenburger] ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .linkless-nav-item {
     padding-left: 30px;
   }
   [data-gardenburger] ul li ul li ul li a,
-  [data-gardenburger] ul li ul li ul li .linkless-nav-item {
+  [data-gardenburger] .dropdown li ul li ul li a,
+  [data-gardenburger] ul li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li a,
+  [data-gardenburger] ul li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .linkless-nav-item {
     padding-left: 40px;
   }
   [data-gardenburger] ul li ul li ul li ul li a,
-  [data-gardenburger] ul li ul li ul li ul li .linkless-nav-item {
+  [data-gardenburger] .dropdown li ul li ul li ul li a,
+  [data-gardenburger] ul li .dropdown li ul li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li a,
+  [data-gardenburger] ul li ul li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] ul li ul li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li .linkless-nav-item {
     padding-left: 50px;
   }
   [data-gardenburger] ul li ul li ul li ul li ul li a,
-  [data-gardenburger] ul li ul li ul li ul li ul li .linkless-nav-item {
+  [data-gardenburger] .dropdown li ul li ul li ul li ul li a,
+  [data-gardenburger] ul li .dropdown li ul li ul li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li ul li a,
+  [data-gardenburger] ul li ul li .dropdown li ul li ul li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li ul li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li ul li a,
+  [data-gardenburger] ul li ul li ul li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li ul li a,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li ul li a,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li ul li a,
+  [data-gardenburger] ul li ul li ul li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li ul li ul li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li ul li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li .dropdown li a,
+  [data-gardenburger] ul li ul li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li .dropdown li a,
+  [data-gardenburger] ul li ul li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li a,
+  [data-gardenburger] ul li ul li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li ul li .linkless-nav-item,
+  [data-gardenburger] ul li ul li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li ul li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li ul li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li ul li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li ul li .dropdown li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li ul li .dropdown li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] ul li .dropdown li .dropdown li .dropdown li .dropdown li .linkless-nav-item,
+  [data-gardenburger] .dropdown li .dropdown li .dropdown li .dropdown li .dropdown li .linkless-nav-item {
     padding-left: 60px;
   }
   [data-gardenburger] > ul {
@@ -324,7 +450,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transform: rotate(-45deg);
   }
 }
-@media (min-width: 100px) {
+@media (min-width: 800px) {
   [data-gardenburger] {
     font-size: inherit;
   }
@@ -351,12 +477,12 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: color 0.5s linear, background-color 0.5s linear;
     transition: color 0.5s linear, background-color 0.5s linear;
   }
-  [data-gardenburger] ul li.hasChildMenu > a,
-  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item {
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator) > a,
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item {
     padding-right: 30px;
   }
-  [data-gardenburger] ul li.hasChildMenu > a:after,
-  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item:after {
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after {
     content: '';
     display: inline-block;
     position: absolute;
@@ -373,10 +499,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: border-left-color 0.5s linear, -ms-transform 0.5s linear;
     transition: border-left-color 0.5s linear, transform 0.5s linear;
   }
-  [data-gardenburger] ul li.hasChildMenu:hover > a:after,
-  [data-gardenburger] ul li.hasChildMenu.focus > a:after,
-  [data-gardenburger] ul li.hasChildMenu:hover > .linkless-nav-item:after,
-  [data-gardenburger] ul li.hasChildMenu.focus > .linkless-nav-item:after {
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger] ul li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after {
     -webkit-transition: -webkit-transform 0.5s linear;
     -moz-transition: -moz-transform 0.5s linear;
     -o-transition: -o-transform 0.5s linear;
@@ -389,8 +515,11 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transform: translateY(5px);
   }
   [data-gardenburger] ul li ul {
-    width: 200px;
     padding: 10px 0;
+  }
+  [data-gardenburger] ul li ul,
+  [data-gardenburger] ul li .dropdown {
+    width: 200px;
     z-index: 10;
     -webkit-transform: translateY(-10px) translateX(0);
     -moz-transform: translateY(-10px) translateX(0);
@@ -399,27 +528,37 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transform: translateY(-10px) translateX(0);
     background-color: #f5f5f5;
   }
-  [data-gardenburger] ul li ul li {
+  [data-gardenburger] ul li ul li,
+  [data-gardenburger] ul li .dropdown li {
     min-width: 180px;
     padding: 0;
     text-align: left;
   }
-  [data-gardenburger] ul li ul li.hasChildMenu > a:after,
-  [data-gardenburger] ul li ul li.hasChildMenu > .linkless-nav-item:after {
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after {
     border-left-color: #444;
     border-top-color: transparent;
   }
-  [data-gardenburger] ul li ul li.hasChildMenu:hover > a:after,
-  [data-gardenburger] ul li ul li.hasChildMenu.focus > a:after,
-  [data-gardenburger] ul li ul li.hasChildMenu:hover > .linkless-nav-item:after,
-  [data-gardenburger] ul li ul li.hasChildMenu.focus > .linkless-nav-item:after {
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after,
+  [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after {
     -webkit-transform: translateX(5px) translateY(0);
     -moz-transform: translateX(5px) translateY(0);
     -o-transform: translateX(5px) translateY(0);
     -ms-transform: translateX(5px) translateY(0);
     transform: translateX(5px) translateY(0);
   }
-  [data-gardenburger] ul li ul li ul {
+  [data-gardenburger] ul li ul li ul,
+  [data-gardenburger] ul li .dropdown li ul,
+  [data-gardenburger] ul li ul li .dropdown,
+  [data-gardenburger] ul li .dropdown li .dropdown {
     top: 0;
     -webkit-transform: translateY(0) translateX(-10px);
     -moz-transform: translateY(0) translateX(-10px);
@@ -447,7 +586,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -webkit-justify-content: center;
     justify-content: center;
   }
-  [data-gardenburger] li ul {
+  [data-gardenburger] li ul,
+  [data-gardenburger] li .dropdown {
 /*
 			Hoverintent delay => Fade out and slide up => Position offscreen
 
@@ -465,7 +605,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: opacity 0.2s linear 0.2s, transform 0.2s ease-out 0.2s, left 0s linear 0.45s;
   }
   [data-gardenburger] li.focus > ul,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > ul {
+  [data-gardenburger] li.focus > .menuPositioningWrapper > ul,
+  [data-gardenburger] li.focus > .dropdown,
+  [data-gardenburger] li.focus > .menuPositioningWrapper > .dropdown {
 /*
 			Fade in and slide down immediately (no hoverintent delay)
 
@@ -481,7 +623,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: transform 0.2s ease-out 0s, opacity 0.2s linear 0s;
   }
   [data-gardenburger] li:hover > ul,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul {
+  [data-gardenburger] li:hover > .menuPositioningWrapper > ul,
+  [data-gardenburger] li:hover > .dropdown,
+  [data-gardenburger] li:hover > .menuPositioningWrapper > .dropdown {
 /*
 			Hoverintent delay => Position onscreen => Slide down and fade in
 	
@@ -498,7 +642,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: left 0s linear 0.2s, -ms-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     transition: left 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
-  [data-gardenburger] li ul.flip {
+  [data-gardenburger] li ul.flip,
+  [data-gardenburger] li .dropdown.flip {
 /*
 			Hoverintent delay => Fade out and slide up => Position offscreen
 
@@ -518,7 +663,11 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
   [data-gardenburger] li.focus > ul.flip,
   [data-gardenburger] li:hover > ul.flip,
   [data-gardenburger] li.focus > .menuPositioningWrapper > ul.flip,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul.flip {
+  [data-gardenburger] li:hover > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li.focus > .dropdown.flip,
+  [data-gardenburger] li:hover > .dropdown.flip,
+  [data-gardenburger] li.focus > .menuPositioningWrapper > .dropdown.flip,
+  [data-gardenburger] li:hover > .menuPositioningWrapper > .dropdown.flip {
     -webkit-transition: right 0s linear 0.2s, -webkit-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     -moz-transition: right 0s linear 0.2s, -moz-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
     -o-transition: right 0s linear 0.2s, -o-transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
@@ -526,8 +675,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: right 0s linear 0.2s, transform 0.2s ease-out 0.2s, opacity 0.2s linear 0.2s;
   }
 }
-@media (min-width: 100px) {
-  [data-gardenburger] li ul {
+@media (min-width: 800px) {
+  [data-gardenburger] li ul,
+  [data-gardenburger] li .dropdown {
     position: absolute;
     left: -999em;
     top: auto;
@@ -539,8 +689,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     filter: alpha(opacity=1);
   }
 }
-@media (max-width: 99px) {
+@media (max-width: 799px) {
   [data-gardenburger] li.closed > ul,
+  [data-gardenburger] li.closed > .dropdown,
   [data-gardenburger].mobileHide > ul {
     position: absolute;
     left: -999em;
@@ -550,11 +701,19 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     width: 100%;
   }
 }
-@media (min-width: 100px) {
-  [data-gardenburger] li.focus > ul,
-  [data-gardenburger] li:hover > ul,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > ul,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul {
+@media (min-width: 800px) {
+  [data-gardenburger] li.focus:not(.not-hoverable) > ul,
+  [data-gardenburger] li:hover:not(.not-hoverable) > ul,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > ul,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > ul,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .dropdown,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .dropdown,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > .dropdown,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > .dropdown,
+  [data-gardenburger] li.locked-active > ul,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > ul,
+  [data-gardenburger] li.locked-active > .dropdown,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > .dropdown {
     opacity: 1;
     -ms-filter: none;
     filter: none;
@@ -566,30 +725,47 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     left: 0;
   }
 }
-@media (min-width: 100px) {
-  [data-gardenburger] li li.focus > ul,
-  [data-gardenburger] li li:hover > ul,
-  [data-gardenburger] li li.focus > .menuPositioningWrapper > ul,
-  [data-gardenburger] li li:hover > .menuPositioningWrapper > ul {
+@media (min-width: 800px) {
+  [data-gardenburger] li li.focus:not(.not-hoverable) > ul,
+  [data-gardenburger] li li:hover:not(.not-hoverable) > ul,
+  [data-gardenburger] li li.focus:not(.not-hoverable) > .menuPositioningWrapper > ul,
+  [data-gardenburger] li li:hover:not(.not-hoverable) > .menuPositioningWrapper > ul,
+  [data-gardenburger] li li.focus:not(.not-hoverable) > .dropdown,
+  [data-gardenburger] li li:hover:not(.not-hoverable) > .dropdown,
+  [data-gardenburger] li li.focus:not(.not-hoverable) > .menuPositioningWrapper > .dropdown,
+  [data-gardenburger] li li:hover:not(.not-hoverable) > .menuPositioningWrapper > .dropdown,
+  [data-gardenburger] li li.locked-active > ul,
+  [data-gardenburger] li li.locked-active > .menuPositioningWrapper > ul,
+  [data-gardenburger] li li.locked-active > .dropdown,
+  [data-gardenburger] li li.locked-active > .menuPositioningWrapper > .dropdown {
     left: 100%;
   }
 }
-@media (min-width: 100px) {
-  [data-gardenburger] li ul.flip {
+@media (min-width: 800px) {
+  [data-gardenburger] li ul.flip,
+  [data-gardenburger] li .dropdown.flip {
     left: auto;
     right: 99999em;
   }
 }
-@media (min-width: 100px) {
-  [data-gardenburger] li.focus > ul.flip,
-  [data-gardenburger] li:hover > ul.flip,
-  [data-gardenburger] li.focus > .menuPositioningWrapper > ul.flip,
-  [data-gardenburger] li:hover > .menuPositioningWrapper > ul.flip {
+@media (min-width: 800px) {
+  [data-gardenburger] li.focus:not(.not-hoverable) > ul.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > ul.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .dropdown.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .dropdown.flip,
+  [data-gardenburger] li.focus:not(.not-hoverable) > .menuPositioningWrapper > .dropdown.flip,
+  [data-gardenburger] li:hover:not(.not-hoverable) > .menuPositioningWrapper > .dropdown.flip,
+  [data-gardenburger] li.locked-active > ul.flip,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > ul.flip,
+  [data-gardenburger] li.locked-active > .dropdown.flip,
+  [data-gardenburger] li.locked-active > .menuPositioningWrapper > .dropdown.flip {
     left: auto !important;
     right: 100%;
   }
 }
-@media (min-width: 100px) {
+@media (min-width: 800px) {
   [data-gardenburger] .submenuTogglers {
     display: none !important;
   }
@@ -597,8 +773,14 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 [data-gardenburger] .burger {
   display: block;
 }
-@media (min-width: 100px) {
+@media (min-width: 800px) {
   [data-gardenburger] .burger {
+    display: none;
+  }
+}
+@media (max-width: 799px) {
+  [data-gardenburger] li.hide-link-in-mobile > a,
+  [data-gardenburger] li.hide-link-in-mobile > .linkless-nav-item {
     display: none;
   }
 }
