@@ -604,8 +604,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: opacity 0.2s linear 0.2s, -ms-transform 0.2s ease-out 0.2s, left 0s linear 0.45s;
     transition: opacity 0.2s linear 0.2s, transform 0.2s ease-out 0.2s, left 0s linear 0.45s;
   }
-  [data-gardenburger] li.not-hoverable ul,
-  [data-gardenburger] li.not-hoverable .dropdown {
+  [data-gardenburger] li.not-hoverable > ul,
+  [data-gardenburger] li.not-hoverable > .dropdown,
+  [data-gardenburger] li.not-hoverable > .menuPositioningWrapper > ul,
+  [data-gardenburger] li.not-hoverable > .menuPositioningWrapper > .dropdown {
 /*
 			Fade out and slide up => Position offscreen
 

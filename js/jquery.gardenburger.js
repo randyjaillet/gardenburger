@@ -524,7 +524,7 @@ Gardenburger.prototype.positionMenus = function () {
 					.end()
 
 			// Remove previously injected positioning wrappers.
-			.find(".menuPositioningWrapper > ul")
+			.find(".menuPositioningWrapper > ul, .menuPositioningWrapper > .dropdown")
 					.unwrap()
 					.end()
 
