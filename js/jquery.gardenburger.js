@@ -327,7 +327,7 @@ Gardenburger.prototype.hideSubmenuMobile = function ($menu) {
 		;
 
 		// Removing this breaks the transition. Whyyyyyy???
-		console.log($menu.css("height"));
+		var boop = $menu.css("height");
 
 		$menu
 				// Begin the transition to 0 height
@@ -523,9 +523,9 @@ Gardenburger.prototype.positionMenus = function () {
 					.removeClass("flip")
 					.end()
 
-			// Remove previously injected positioning wrappers.
-			.find(".menuPositioningWrapper > ul, .menuPositioningWrapper > .dropdown")
-					.unwrap()
+			// Remove previous positional adjustments
+			.find("ul[style*=transform], .dropdown[style*=transform]")
+					.css("transform","")
 					.end()
 
 			// Go through second-level menus and figure out their
@@ -537,30 +537,23 @@ Gardenburger.prototype.positionMenus = function () {
 			// We're storing the horizontal position at which
 			// menus would be if they were visible in the
 			// "visiblePosX" data key.
-			.find("ul:first > li > ul, ul:first > li > .menuPositioningWrapper > ul, ul:first > li > .dropdown, ul:first > li > .menuPositioningWrapper > .dropdown")
+			.find("ul:first > li > ul, ul:first > li > .dropdown")
 					.each(
 						function () {
-							var neededOffsetRight,
-								siblingLinkOffsetLeft
+							var siblingLinkOffsetLeft = $(this).prevAll("a, .linkless-nav-item").offset().left,
+								neededOffsetRight = siblingLinkOffsetLeft + $(this).outerWidth() - $(window).width()
 							;
 
-							if ($(this).closest(".menuPositioningWrapper").length) {
-								siblingLinkOffsetLeft = $(this).closest(".menuPositioningWrapper").prevAll("a, .linkless-nav-item").offset().left;
-							} else {
-								siblingLinkOffsetLeft = $(this).prevAll("a, .linkless-nav-item").offset().left;
-							}
-
 							$(this).data("visiblePosX", siblingLinkOffsetLeft);
-
-							neededOffsetRight = $(this).data("visiblePosX") + $(this).outerWidth() - $(window).width();
 
 							if (neededOffsetRight > 0) {
 
 								$(this)
-										.wrap("<div class=\"menuPositioningWrapper\"></div>")
-										.closest(".menuPositioningWrapper")
-												.css({ "transform" : "translateX(-" + neededOffsetRight + "px)" })
-												.end() // back to $(this) menu
+										.css(
+											{
+												"transform" : "translateX(-" + neededOffsetRight + "px)"
+											}
+										)
 										.data("visiblePosX", siblingLinkOffsetLeft - neededOffsetRight);
 								;
 							}
@@ -575,15 +568,15 @@ Gardenburger.prototype.positionMenus = function () {
 							.each(
 								function () {
 									var $parentMenu = $(this).parents("ul, .dropdown").first();
-	
+
+									// Set the visiblePosX to be the parent's + its width
 									$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
 	
+									// If the menu will pass beyond the horizontal viewport fold, flip it,
+									// then recalculate the visiblePosX based on the new position
 									if ($(this).data("visiblePosX") + $(this).outerWidth() > $(window).width()) {
 										$(this).addClass("flip");
 										$(this).data("visiblePosX", $parentMenu.data("visiblePosX") - $(this).outerWidth());
-									} else {
-										$(this).removeClass("flip");
-										$(this).data("visiblePosX", $parentMenu.data("visiblePosX") + $parentMenu.outerWidth());
 									}
 	
 								}
