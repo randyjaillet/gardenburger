@@ -139,7 +139,7 @@ Gardenburger.prototype.init = function () {
 					e.preventDefault();
 					$(window).width() < root.settings.breakpoint && $(e.target).closest("li").children(".submenuTogglers").click();
 					if ($(e.target).data("click-handler") == "focus-child") {
-						$(e.target).closest("li").children("ul, .dropdown").find("a, input").eq(0).focus();
+						$(e.target).closest("li").find("ul, .dropdown").find("a, input").eq(0).focus();
 					}
 				}
 			)
