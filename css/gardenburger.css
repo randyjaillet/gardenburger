@@ -618,13 +618,13 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 
 			Time in seconds ->	0		.1      .2      .3      .4      .5
 								|	|	|	|	|	|	|	|	|	|	|
-			opacity fade in     |---------------*
+			opacity fade in     |-----------*
 			*/
-    -webkit-transition: opacity 0.2s linear 0s;
-    -moz-transition: opacity 0.2s linear 0s;
-    -o-transition: opacity 0.2s linear 0s;
-    -ms-transition: opacity 0.2s linear 0s;
-    transition: opacity 0.2s linear 0s;
+    -webkit-transition: opacity 0.15s linear 0s;
+    -moz-transition: opacity 0.15s linear 0s;
+    -o-transition: opacity 0.15s linear 0s;
+    -ms-transition: opacity 0.15s linear 0s;
+    transition: opacity 0.15s linear 0s;
   }
   [data-gardenburger] li:hover:not(.not-hoverable) > ul,
   [data-gardenburger] li:hover:not(.not-hoverable) > .dropdown {
@@ -635,13 +635,13 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 								|	|	|	|	|	|	|	|	|	|	|	|	|
 			(hover intent)		|---------------*
 			left in				|				*
-			opacity fade in		|				*---------------*
+			opacity fade in		|				*-----------*
 			*/
-    -webkit-transition: left 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -moz-transition: left 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -o-transition: left 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -ms-transition: left 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    transition: left 0s linear 0.2s, opacity 0.2s linear 0.2s;
+    -webkit-transition: left 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -moz-transition: left 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -o-transition: left 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -ms-transition: left 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    transition: left 0s linear 0.2s, opacity 0.15s linear 0.2s;
   }
   [data-gardenburger] li:not(.not-hoverable) ul.flip,
   [data-gardenburger] li:not(.not-hoverable) .dropdown.flip {
@@ -671,13 +671,13 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
 								|	|	|	|	|	|	|	|	|	|	|	|	|
 			(hover intent)		|---------------*
 			right in			|				*
-			opacity fade in		|				*---------------*
+			opacity fade in		|				*-----------*
 			*/
-    -webkit-transition: right 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -moz-transition: right 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -o-transition: right 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    -ms-transition: right 0s linear 0.2s, opacity 0.2s linear 0.2s;
-    transition: right 0s linear 0.2s, opacity 0.2s linear 0.2s;
+    -webkit-transition: right 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -moz-transition: right 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -o-transition: right 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    -ms-transition: right 0s linear 0.2s, opacity 0.15s linear 0.2s;
+    transition: right 0s linear 0.2s, opacity 0.15s linear 0.2s;
   }
 }
 @media (min-width: 800px) {
