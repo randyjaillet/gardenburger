@@ -398,39 +398,44 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     display: inline-block;
     vertical-align: top;
     padding: 10px;
-    width: 50px;
+    width: 56px;
+  }
+  [data-gardenburger] .burger a:focus {
+    outline: none;
   }
   [data-gardenburger] .burger a i {
     display: block;
-    height: 6px;
+    height: 4px;
     background: #333;
-    -webkit-transform-origin: -2px center;
-    -moz-transform-origin: -2px center;
-    -o-transform-origin: -2px center;
-    -ms-transform-origin: -2px center;
-    transform-origin: -2px center;
-    -webkit-transition: all 0.15s linear;
-    -moz-transition: all 0.15s linear;
-    -o-transition: all 0.15s linear;
-    -ms-transition: all 0.15s linear;
-    transition: all 0.15s linear;
+    -webkit-transition: -webkit-transform 0.3s linear;
+    -moz-transition: -moz-transform 0.3s linear;
+    -o-transition: -o-transform 0.3s linear;
+    -ms-transition: -ms-transform 0.3s linear;
+    transition: transform 0.3s linear;
   }
   [data-gardenburger] .burger a i + i {
-    margin-top: 6px;
+    margin-top: 10px;
+  }
+  [data-gardenburger] .burger a i:nth-child(2) {
+    -webkit-transition: opacity 0.15s linear 0.15s;
+    -moz-transition: opacity 0.15s linear 0.15s;
+    -o-transition: opacity 0.15s linear 0.15s;
+    -ms-transition: opacity 0.15s linear 0.15s;
+    transition: opacity 0.15s linear 0.15s;
   }
   [data-gardenburger] .burger.ex a i {
-    -webkit-transition: all 0.15s linear;
-    -moz-transition: all 0.15s linear;
-    -o-transition: all 0.15s linear;
-    -ms-transition: all 0.15s linear;
-    transition: all 0.15s linear;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    transition: all 0.3s linear;
   }
   [data-gardenburger] .burger.ex a i:first-child {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
+    -webkit-transform: translateY(14px) rotate(135deg);
+    -moz-transform: translateY(14px) rotate(135deg);
+    -o-transform: translateY(14px) rotate(135deg);
+    -ms-transform: translateY(14px) rotate(135deg);
+    transform: translateY(14px) rotate(135deg);
   }
   [data-gardenburger] .burger.ex a i:nth-child(2) {
     -webkit-transition: opacity 0.15s linear;
@@ -443,11 +448,11 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     filter: alpha(opacity=0);
   }
   [data-gardenburger] .burger.ex a i:last-child {
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+    -webkit-transform: translateY(-14px) rotate(-135deg);
+    -moz-transform: translateY(-14px) rotate(-135deg);
+    -o-transform: translateY(-14px) rotate(-135deg);
+    -ms-transform: translateY(-14px) rotate(-135deg);
+    transform: translateY(-14px) rotate(-135deg);
   }
 }
 @media (min-width: 800px) {
