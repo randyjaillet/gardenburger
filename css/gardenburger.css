@@ -189,6 +189,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -webkit-flex: 1 1 1px;
     -ms-flex: 1 1 1px;
     flex: 1 1 1px;
+    max-width: calc(100% - 61px);
     margin-right: 1px;
   }
   [data-gardenburger] ul li.hasChildMenu .submenuTogglers,
