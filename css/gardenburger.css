@@ -469,7 +469,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: color 0.5s linear, background-color 0.5s linear;
     padding: 10px 20px;
     background: none;
-    color: #444;
+    color: #337ab7;
   }
   [data-gardenburger] ul li:hover > a,
   [data-gardenburger] ul li.focus > a,
@@ -498,7 +498,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     border-color: transparent;
     border-width: 4px;
     margin-top: -2px;
-    border-top-color: #444;
+    border-top-color: #337ab7;
     -webkit-transition: border-left-color 0.5s linear, -webkit-transform 0.5s linear;
     -moz-transition: border-left-color 0.5s linear, -moz-transform 0.5s linear;
     -o-transition: border-left-color 0.5s linear, -o-transform 0.5s linear;
@@ -520,6 +520,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transform: translateY(5px);
     transform: translateY(5px);
   }
+  [data-gardenburger] ul li.active > a {
+    color: rgba(0,0,0,0.7);
+  }
   [data-gardenburger] ul li ul {
     padding: 10px 0;
   }
@@ -539,7 +542,7 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
   [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator) > a:after,
   [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after,
   [data-gardenburger] ul li .dropdown li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after {
-    border-left-color: #444;
+    border-left-color: #337ab7;
     border-top-color: transparent;
   }
   [data-gardenburger] ul li ul li.hasChildMenu:not(.no-indicator):hover > a:after,
