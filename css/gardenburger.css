@@ -137,6 +137,9 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
   font-size: 85%;
 }
 @media (max-width: 799px) {
+  [data-gardenburger] {
+    overflow: hidden;
+  }
   [data-gardenburger] ul li,
   [data-gardenburger] .dropdown li {
     margin-top: 1px;
@@ -163,8 +166,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     transition: background 0.2s linear;
     background: rgba(0,0,0,0.04);
   }
-  [data-gardenburger] ul li.hasChildMenu,
-  [data-gardenburger] .dropdown li.hasChildMenu {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile),
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) {
     display: -webkit-box;
     display: -moz-box;
     display: -webkit-flex;
@@ -178,10 +181,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
-  [data-gardenburger] ul li.hasChildMenu > a,
-  [data-gardenburger] .dropdown li.hasChildMenu > a,
-  [data-gardenburger] ul li.hasChildMenu > .linkless-nav-item,
-  [data-gardenburger] .dropdown li.hasChildMenu > .linkless-nav-item {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) > a,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) > a,
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) > .linkless-nav-item,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) > .linkless-nav-item {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -192,8 +195,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     max-width: calc(100% - 61px);
     margin-right: 1px;
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers,
-  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -208,12 +211,12 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     border: none;
     background: rgba(0,0,0,0.08);
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers:focus,
-  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers:focus {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers:focus,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers:focus {
     outline: none;
   }
-  [data-gardenburger] ul li.hasChildMenu .submenuTogglers i,
-  [data-gardenburger] .dropdown li.hasChildMenu .submenuTogglers i {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers i,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) .submenuTogglers i {
     display: inline-block;
     -webkit-transform-origin: center 20%;
     -moz-transform-origin: center 20%;
@@ -233,8 +236,8 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     width: 0;
     height: 0;
   }
-  [data-gardenburger] ul li.hasChildMenu.opening > .submenuTogglers i,
-  [data-gardenburger] .dropdown li.hasChildMenu.opening > .submenuTogglers i {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile).opening > .submenuTogglers i,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile).opening > .submenuTogglers i {
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -o-transform: rotate(180deg);
@@ -246,10 +249,10 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transition: -ms-transform 0.25s linear;
     transition: transform 0.25s linear;
   }
-  [data-gardenburger] ul li.hasChildMenu > ul,
-  [data-gardenburger] .dropdown li.hasChildMenu > ul,
-  [data-gardenburger] ul li.hasChildMenu > .dropdown,
-  [data-gardenburger] .dropdown li.hasChildMenu > .dropdown {
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) > ul,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) > ul,
+  [data-gardenburger] ul li.hasChildMenu:not(.surface-visible-in-mobile) > .dropdown,
+  [data-gardenburger] .dropdown li.hasChildMenu:not(.surface-visible-in-mobile) > .dropdown {
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -o-box-flex: 1;
@@ -499,11 +502,11 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     border-width: 4px;
     margin-top: -2px;
     border-top-color: #337ab7;
-    -webkit-transition: border-left-color 0.5s linear, -webkit-transform 0.5s linear;
-    -moz-transition: border-left-color 0.5s linear, -moz-transform 0.5s linear;
-    -o-transition: border-left-color 0.5s linear, -o-transform 0.5s linear;
-    -ms-transition: border-left-color 0.5s linear, -ms-transform 0.5s linear;
-    transition: border-left-color 0.5s linear, transform 0.5s linear;
+    -webkit-transition: border-top-color 0.5s linear, -webkit-transform 0.5s linear;
+    -moz-transition: border-top-color 0.5s linear, -moz-transform 0.5s linear;
+    -o-transition: border-top-color 0.5s linear, -o-transform 0.5s linear;
+    -ms-transition: border-top-color 0.5s linear, -ms-transform 0.5s linear;
+    transition: border-top-color 0.5s linear, transform 0.5s linear;
   }
   [data-gardenburger] ul li.hasChildMenu:not(.no-indicator):hover > a:after,
   [data-gardenburger] ul li.hasChildMenu:not(.no-indicator).focus > a:after,
@@ -559,12 +562,6 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-transform: translateX(5px) translateY(0);
     transform: translateX(5px) translateY(0);
   }
-  [data-gardenburger] ul li ul li ul,
-  [data-gardenburger] ul li .dropdown li ul,
-  [data-gardenburger] ul li ul li .dropdown,
-  [data-gardenburger] ul li .dropdown li .dropdown {
-    top: 0;
-  }
   [data-gardenburger] > ul {
     -webkit-box-orient: horizontal;
     -moz-box-orient: horizontal;
@@ -584,6 +581,43 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     -ms-flex-pack: start;
     -webkit-justify-content: flex-start;
     justify-content: flex-start;
+  }
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after {
+    border-width: 4px;
+    margin-top: -6px;
+    border-top-color: transparent;
+    border-bottom-color: #337ab7;
+  }
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger].flip-v ul li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after {
+    -webkit-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    -o-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator) > a:after,
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator) > .linkless-nav-item:after {
+    border-bottom-color: transparent;
+  }
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator):hover > a:after,
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator).focus > a:after,
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator):hover > .linkless-nav-item:after,
+  [data-gardenburger].flip-v ul li ul li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after,
+  [data-gardenburger].flip-v ul li .dropdown li.hasChildMenu:not(.no-indicator).focus > .linkless-nav-item:after {
+    -webkit-transform: translateX(5px) translateY(0);
+    -moz-transform: translateX(5px) translateY(0);
+    -o-transform: translateX(5px) translateY(0);
+    -ms-transform: translateX(5px) translateY(0);
+    transform: translateX(5px) translateY(0);
   }
   [data-gardenburger] li:not(.not-hoverable) ul,
   [data-gardenburger] li:not(.not-hoverable) .dropdown {
@@ -701,6 +735,25 @@ THIS FILE IS COMPILED. EDIT THE ORIGINAL STYLUS FILE IN SRC/, NOT THIS!!
     opacity: 0.01;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
     filter: alpha(opacity=1);
+  }
+  [data-gardenburger] li ul li ul,
+  [data-gardenburger] li .dropdown li ul,
+  [data-gardenburger] li ul li .dropdown,
+  [data-gardenburger] li .dropdown li .dropdown {
+    top: 0;
+  }
+}
+@media (min-width: 800px) {
+  [data-gardenburger].flip-v li ul,
+  [data-gardenburger].flip-v li .dropdown {
+    bottom: 100%;
+  }
+  [data-gardenburger].flip-v li ul li ul,
+  [data-gardenburger].flip-v li .dropdown li ul,
+  [data-gardenburger].flip-v li ul li .dropdown,
+  [data-gardenburger].flip-v li .dropdown li .dropdown {
+    top: auto;
+    bottom: 0;
   }
 }
 @media (max-width: 799px) {
