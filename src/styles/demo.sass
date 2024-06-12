@@ -1,0 +1,115 @@
+@import 'helpers/helpers'
+
+*:not(.opti *)
+	box-sizing: border-box
+
+body
+	margin: 0
+	padding: 0
+	min-height: 100vh
+	background-color: #1C232E
+	display: flex
+	flex-direction: column
+	justify-content: center
+
+body,
+input:not(.opti *),
+textarea:not(.opti *)
+	font: 200 14px/1.35 "Open Sans", sans-serif
+	color: rgba(white, .85)
+
+a,
+.nav-item
+	text-decoration: none
+	color: $accent
+
+	&:hover,
+	&:focus
+		outline: none
+
+svg
+	stroke: currentColor
+
+header
+	display: flex
+	align-items: center
+	justify-content: space-between
+	gap: 20px
+	margin: 30px 0
+	padding: 10px 20px
+	background: #333943
+	box-shadow: inset 0 1px 0 rgba(white, .1), 0 1px 2px rgba(black, .2)
+	background-image: radial-gradient(150% 110% at center top, rgba(white, 5%), rgba(white, 3%) 50%, transparent 50%), linear-gradient(rgba(white, 7%), rgba(black, 7%))
+
+	#logo
+		font: 40px/1 "Parisienne"
+		margin: 0
+		text-wrap: nowrap
+
+		span
+			display: inline-block
+			margin-left: 5px
+			font: 16px/1 "Open Sans", sans-serif
+			font-weight: 100
+
+	#gardenburger-button
+		$size: 24px
+		height: $size
+		width: $size
+		border-radius: 5px
+		display: flex
+		align-items: center
+		justify-content: center
+
+		&:hover,
+		&:focus
+			background-color: $accent-faded
+
+#search
+
+	#search-wrap
+		display: flex
+		flex-direction: row
+		flex: 1 1 auto
+		background-color: rgba(black, .1)
+		border-radius: 200px
+		box-shadow: inset 0 1px 3px rgba(black,.4), 0 1px 0 0 rgba(white,.2)
+		transition: all $dur linear
+
+		&:focus-within
+			background-color: $accent-faded
+
+	#search-input,
+	#search-submit
+		appearance: none
+		border: unset
+		background-color: unset
+		margin: unset
+		padding: 5px
+		color: white
+		border-radius: 200px
+		transition: all $dur linear
+
+		&:focus
+			outline: none
+
+	#search-input
+		padding: 5px 15px
+
+	#search-submit
+		flex: 0 0 auto
+		display: flex
+		align-items: center
+		margin: 5px
+		background-color: #434343
+		background-image: linear-gradient(rgba(white,.1), transparent)
+		box-shadow: inset 0 1px 0 0 rgba(white,.2), 0 1px 3px rgba(black,.4)
+		cursor: pointer
+
+		&:hover,
+		&:focus
+			background-color: $accent-faded
+
+		svg
+			height: 16px
+			width: 16px

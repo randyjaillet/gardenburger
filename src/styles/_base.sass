@@ -1,0 +1,194 @@
+.gardenburger,
+.gardenburger *,
+.gardenburger *:before,
+.gardenburger *:after
+	box-sizing: border-box
+
+
+.gardenburger:not(.compact)
+
+	.icon-chevron-compact-label
+		display: none
+
+
+	//
+	// All lists
+	//
+
+	ul,
+	.nav-dropdown
+		display: flex
+		align-items: stretch
+
+
+		//
+		// All list items
+		//
+
+		li
+			position: relative
+
+
+			//
+			// Child and deeper lists - zero state
+			//
+			// They're transparent at this point in order
+			// to have fade in/out transitions.
+			// The transition property is for when the list
+			// is being hidden. It delays the fade-out so
+			// that it persists briefly and allows users to
+			// navigate it with their cursor. It delays
+			// moving it off-screen until the fade-out is
+			// finished, or double $dur (since the fade-out
+			// is already delayed by one $dur).
+			ul,
+			.nav-dropdown
+				position: absolute
+				left: -200vw
+				opacity: 0
+				flex-direction: column
+				align-items: stretch
+				transition: opacity $dur linear $dur, transform $dur linear $dur, left 0s linear $dur*2, right 0s linear $dur*2
+
+				&.justify-right
+					left: unset
+					right: 200vw
+
+
+			//
+			// Child and deeper lists - active state (parent)
+			//
+
+			&:has(ul, .nav-dropdown):focus-within,
+			&:has(ul, .nav-dropdown):hover
+
+				> ul,
+				> .nav-dropdown
+					opacity: 1
+
+
+			//
+			// Child and deeper lists - active focus state (parent)
+			//
+			// On focus with the keyboard we want to start
+			// the transitions without a delay because it's
+			// less important to confirm intent. Plus people
+			// who use tab to navigate are probably SPEEDY.
+			&:focus-within
+
+				> ul,
+				> .nav-dropdown
+					transition: opacity $dur linear, transform $dur linear
+
+
+			//
+			// Child and deeper lists - active hover state (parent)
+			//
+			// On hover with the mouse we want to delay
+			// the transitions as a "hover intent" feature
+			// so it doesn't flash submenus when you move
+			// the cursor quickly over the list items.
+			&:hover
+
+				> ul,
+				> .nav-dropdown
+					transition: opacity $dur linear $dur, left 0s linear $dur
+
+
+			//
+			// Child and deeeper list items
+			//
+
+			ul,
+			.nav-dropdown
+
+				li
+
+
+					//
+					// Grandchild and deeper lists - zero state
+					//
+
+					// Position horizontally-appearing lists vertically
+					// so all we have to do to reveal them is change their
+					// left property.
+					// They are positioned at the top of their items
+					// so the submenu's first item is in line with the
+					// parent item. We have to shift it to compensate
+					// for the UL's padding.
+					ul,
+					.nav-dropdown
+						top: -$ul-pad
+						// transform: translateX(-5px)
+
+						&.flip-h
+							left: unset
+							right: 200vw
+							transition: opacity $dur linear $dur, right 0s linear $dur*2
+
+
+					//
+					// Grandchild and deeper lists - active state (parent)
+					//
+
+					// Move the horizontally-appearing list into view
+					&:focus-within,
+					&:hover
+
+						> ul,
+						> .nav-dropdown
+							left: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
+							// transform: translateX(0)
+
+							&.flip-h
+								left: unset
+								right: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
+								transition: opacity $dur linear $dur, right 0s linear $dur*2
+
+
+	//
+	// Surface list only
+	//
+
+	> ul
+
+
+		//
+		// Surface list items only
+		//
+
+		> li
+
+
+			//
+			// Child lists only - zero state (parent)
+			//
+
+			// Position vertically-appearing lists vertically
+			// so all we have to do to reveal them is change
+			// their left or right property.
+			// They are positioned at the bottom of their items
+			// with a gutter for the indicator chevron.
+			> ul,
+			> .nav-dropdown
+				// top: calc(100% + $root-pad + $chev-size + $chev-gutter*2)
+				top: calc(100% + $chev-size + $chev-gutter*2)
+				transform: translateY(-5px)
+
+
+			//
+			// Child lists only - active state (parent)
+			//
+
+			// Move the vertically-appearing list into view
+			&:focus-within,
+			&:hover
+
+				> ul,
+				> .nav-dropdown
+					left: 0
+					transform: translateY(0)
+
+					&.justify-right
+						left: unset
+						right: 0
