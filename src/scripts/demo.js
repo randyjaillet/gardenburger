@@ -1,10 +1,6 @@
-$(function () {
-
-	$("a").on(
-		"click",
-		e => {
-			e.preventDefault();
-		}
-	);
-
-});
+$("a").on(
+	"click",
+	e => {
+		e.preventDefault();
+	}
+);
