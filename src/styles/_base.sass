@@ -54,6 +54,10 @@
 					left: unset
 					right: 200vw
 
+				&.flip-v
+					top: unset
+					bottom: calc(100% + $ul-pad + $root-pad)
+
 
 			//
 			// Child and deeper lists - active state (parent)
@@ -92,7 +96,7 @@
 
 				> ul,
 				> .nav-dropdown
-					transition: opacity $dur linear $dur, left 0s linear $dur
+					transition: opacity $dur linear $dur, left 0s linear $dur, right 0s linear $dur
 
 
 			//
@@ -141,9 +145,10 @@
 							// transform: translateX(0)
 
 							&.flip-h
-								left: unset
 								right: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
-								transition: opacity $dur linear $dur, right 0s linear $dur*2
+
+							// &.flip-v
+
 
 
 	//

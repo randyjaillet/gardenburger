@@ -213,8 +213,7 @@ class Gardenburger {
 		);
 
 
-		// TODO Support flipping the dropdowns vertically
-		// (might be already)
+		// REVIEW Are we supporting vertical flipping yet?
 		this.#flipAsNeeded();
 		this.#handleCompactMode();
 		$(window).on(
@@ -287,14 +286,22 @@ class Gardenburger {
 
 	#flipAsNeeded () {
 
-		const self = this;
+		const
+			self = this
+		;
 
 		this.$n.children("ul").find("ul, .nav-dropdown").not("li li *").each(
 			function () {
-				if ($(this).outerWidth() + $(this).parent().offset().left > $(window).width()) {
+				const
+					noSpaceRight = $(this).outerWidth() + $(this).parent().offset().left > $(window).width(),
+					hasSpaceLeft = $(this).parent().offset().left > $(this).outerWidth(),
+					noSpaceBelow = $(this).outerHeight() + $(this).parent().offset().top > $(window).height(),
+					hasSpaceAbove = $(this).parent().offset().top > $(this).outerWidth()
+				;
+				if (noSpaceRight && hasSpaceLeft) {
 					$(this).addClass("justify-right");
 				}
-				if ($(this).outerHeight() + $(this).parent().offset().top > $(window).height()) {
+				if (noSpaceBelow && hasSpaceAbove) {
 					$(this).addClass("flip-v");
 				}
 			}
