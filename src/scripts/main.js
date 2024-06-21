@@ -76,15 +76,26 @@ class Gardenburger {
 
 		const
 			self = this,
-			$surfUL = this.$n.find("ul").first(),
-			$surfLIs = $surfUL.children("li"),
-			$descLIs = $surfLIs.find("li"),
-			$immediateChildLIs = $descLIs.not("li li li"),
-			$surfAs = $surfLIs.children("a, .nav-item"),
-			$descAs = $descLIs.children("a, .nav-item"),
-			$surfLIsWithULs = $surfLIs.has("ul, .nav-dropdown"),
-			$descLIsWithULs = $descLIs.has("ul, .nav-dropdown"),
+
+			// Dropdowns
+			$allDropdowns = this.$n.find("ul, .nav-dropdown"),
+
+			// List items
+			$allLIs 		   = this.$n .find  ("li"),
+			$surfLIs 		   = $allLIs .not   (".gardenburger li li"),
+			$descLIs 		   = $allLIs .filter(".gardenburger li li"),
+			$immediateChildLIs = $descLIs.not   (".gardenburger li li li"),
 			
+			// List items that are ancestors of dropdowns
+			$allLIsWithULs  = $allLIs .has($allDropdowns),
+			$surfLIsWithULs = $surfLIs.has($allDropdowns),
+			$descLIsWithULs = $descLIs.has($allDropdowns),
+
+			// Anchors
+			$allAs  = this.$n.find  ("a, .nav-item"),
+			$surfAs = $allAs .not	(".gardenburger li li *"),
+			$descAs = $allAs .filter(".gardenburger li li *"),
+
 			$arrowRtSvg   = $('<svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4488bb" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>'),
 			$chevronDnSvg = $('<svg class="icon-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4488bb" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>'),
 			$chevronDnSvgCompactLabel = $('<label class="icon-chevron-compact-label">'),
@@ -98,14 +109,17 @@ class Gardenburger {
 
 		// Add the mobile mode show/reveal controls to each
 		// nav item with a submenu
-		$chevronDnSvgCompactLabel.append($chevronDnSvgCompactCheckbox, $chevronDnSvgCompact).appendTo($surfLIsWithULs.add($descLIsWithULs).children("a, .nav-item"));
+		$chevronDnSvgCompactLabel.append($chevronDnSvgCompactCheckbox, $chevronDnSvgCompact).appendTo($allLIsWithULs.children("a, .nav-item"));
 
 		// Add the submenu indicator chevrons
 		$surfLIsWithULs.children("a, .nav-item").after($chevronDnSvg);
 		$descLIsWithULs.children("a, .nav-item").after($chevronRtSvg);
 
 
-
+		// Giving these elements that can't normally be focused a tabindex makes them focusable;
+		// making their tabindex -1 makes it so tabbing won't access them. We want this because I
+		// think tab should skip those elements, but I still want to be able to focus on them for
+		// Gardenburger's arrow key navigation.
 		this.$n.find(".nav-item:not(a)").attr("tabIndex", "-1");
 
 
