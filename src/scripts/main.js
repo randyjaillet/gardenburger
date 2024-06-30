@@ -31,6 +31,8 @@ class Gardenburger {
 				
 				"breakpoint": 450,
 				"mobileNavMode": "overlay",
+				"inlineModeInjectionPoint": "self",
+				"inlineModeInjectionType": "append",
 				"overflowText": ""
 				
 			},
@@ -118,12 +120,12 @@ class Gardenburger {
 
 		this.$b.on(
 			'click',
-			function(e) {
+			e => {
 				e.preventDefault();
-				if (self.settings.mobileNavMode == "overlay") {
-					$("#gardenburger-screen").hasClass("hidden") ? self.#showOverlayNav() : self.#hideOverlayNav();
+				if (this.settings.mobileNavMode == "overlay") {
+					$("#gardenburger-screen").hasClass("hidden") ? this.#showOverlayNav() : this.#hideOverlayNav();
 				} else {
-					self.$n.toggleClass("revealed");
+					this.$n.hasClass("revealed") ? this.#hideInlineNav() : this.#showInlineNav();
 				}
 			}
 		);
@@ -143,6 +145,7 @@ class Gardenburger {
 		this.#updateKeyboardHandlersDesktop(this.$n);
 
 		Gardenburger.#recordWidth($surfLIs);
+		this.#vFlipIfNeeded();
 		this.applyPositionalModifiers();
 		this.#handleMobileMode();
 		if (!this.inMobileMode) {
@@ -272,9 +275,6 @@ class Gardenburger {
 						$immediateChildLIs = $descLIs.not("li li li"),
 						$allNavULs = this.$n.find("ul, .nav-dropdown"),
 						$allNavLIs = this.$n.find("li"),
-						$allVisNavLIs = $allNavLIs.filter(
-							(_ix, el) => $(el).parents("ul, .nav-dropdown").first().css("opacity") == '1'
-						),
 						$allNavAnchors = this.$n.find("a, .nav-item"),
 						$etLI = $et.parents($allNavLIs).first(),
 						$nextSib = $etLI.nextAll($allNavLIs).has($allNavAnchors).first(),
@@ -404,15 +404,20 @@ class Gardenburger {
 				const
 					$eligibleLIs = this.$n.find("ul").first().children("li").not("[data-gardenburger-supress-overflow], #gardenburger-overflow, :only-child")
 				;
-				$eligibleLIs.last().appendTo($overflowLIUL);
+				$eligibleLIs.last().prependTo($overflowLIUL);
 			}
 		}
 
 		// Show previously hidden nav items that can now fit
-		$($overflowLIUL.children("li").get().reverse()).each(
+		$overflowLIUL.children("li").each(
 			(_ix, el) => {
 				if (this.#hasSpaceForNavItem($(el))) {
-					$(el).insertAfter(this.$n.find("ul").first().children("li").not("[data-gardenburger-supress-overflow], #gardenburger-overflow").last());
+					const $eligibleTargets = this.$n.find("ul").first().children("li").not("[data-gardenburger-supress-overflow], #gardenburger-overflow");
+					if ($eligibleTargets.length) {
+						$(el).insertAfter($eligibleTargets.last());
+					} else {
+						$(el).prependTo(this.$n.find("ul").first());
+					}
 				} else {
 					return false;
 				}
@@ -467,6 +472,14 @@ class Gardenburger {
 
 
 
+	#emptyOverflowNavItem ($scope = this.$n) {
+		$scope.find("#gardenburger-overflow > ul > li").insertAfter($scope.find("ul").first().children("li").not("[data-gardenburger-supress-overflow], #gardenburger-overflow").last());
+		$scope.find("#gardenburger-overflow").remove();
+	}
+
+
+
+
 	static #recordWidth ($targets) {
 		$targets.each(
 			(_ix, el) => {
@@ -485,17 +498,17 @@ class Gardenburger {
 	#handleMobileMode () {
 
 		if ($(window).width() > this.settings.breakpoint) {
-			this.$b.filter(":hidden").hide();
+			this.$b.not(":hidden").hide();
 			if (this.settings.mobileNavMode == "inline" && this.$n.is(".compact")) {
 				this.#deactivateInlineMode();
-			} else {
+			} else if (this.settings.mobileNavMode == "overlay" && !this.$n.find("ul").length) {
 				this.#deactivateOverlayMode();
 			}
 		} else {
 			this.$b.filter(":hidden").show();
 			if (this.settings.mobileNavMode == "inline" && this.$n.is(":not(.compact)")) {
 				this.#activateInlineMode();
-			} else {
+			} else if (this.settings.mobileNavMode == "overlay" && this.$n.find("ul").length) {
 				this.#activateOverlayMode();
 			}
 		}
@@ -534,6 +547,7 @@ class Gardenburger {
 
 		const $ovnv = $("#gardenburger-screen");
 
+		$ovnv.find(".label-chevron-compact > [type=checkbox]").prop("checked", false);
 		$ovnv.removeClass("hidden");
 		$ovnv.find("a, .nav-item, input, button").attr("tabindex", "1");
 		$ovnv.find("a, .nav-item").first().trigger("focus");
@@ -556,6 +570,21 @@ class Gardenburger {
 
 
 
+	#showInlineNav () {
+		this.$n.find(".label-chevron-compact > [type=checkbox]").prop("checked", false);
+		this.$n.addClass("revealed");
+	}
+
+
+
+
+	#hideInlineNav () {
+		this.$n.removeClass("revealed");
+	}
+
+
+
+
 	static #constructOverlayScreen () {
 		return $(`<div id="gardenburger-screen" class="hidden"><span class="gardenburger-screen-ex"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></div>`);
 	}
@@ -564,9 +593,13 @@ class Gardenburger {
 
 
 	#activateOverlayMode () {
-		const $ovnv = this.#getOverlayScreen();
-		const $placeholder = $(`<span id="gb-placeholder-${this.i}"/>`).insertBefore(this.$n.find("ul").first()).hide();
+		const
+			$ovnv = this.#getOverlayScreen(),
+			$placeholder = $(`<span id="gb-placeholder-${this.i}"/>`)
+		;
+		$placeholder.insertBefore(this.$n.find("ul").first()).hide()
 		this.$n.find("ul").first().appendTo($ovnv);
+		this.#emptyOverflowNavItem($ovnv);
 		this.#updateKeyboardHandlersMobile($ovnv);
 		this.inMobileMode = true;
 	}
@@ -589,18 +622,37 @@ class Gardenburger {
 		this.$n.filter(":not(.compact)").addClass("compact");
 
 		const
-			injectionLocation = $(this.$n.data("gardenburger-mobile-injection-location")),
-			injectionType = this.$n.data("gardenburger-mobile-injection-type"),
-			$placeholder = $(`<span id="gb-placeholder-${this.i}"/>`).hide()
+			injectionLocation = this.settings.inlineModeInjectionPoint,
+			injectionType = this.settings.inlineModeInjectionType
 		;
-		if (injectionLocation) {
-			if (!$(`#gb-placeholder-${this.i}`).length) $placeholder.insertBefore(this.$n);
-			if (injectionType == "prepend") {
-				this.$n.prependTo(injectionLocation);
-			} else {
-				this.$n.appendTo(injectionLocation);
+
+		if (this.settings.inlineModeInjectionPoint != "self") {
+
+			$(`#gb-placeholder-${this.i}`).length || $(`<span id="gb-placeholder-${this.i}"/>`).hide().insertBefore(this.$n);
+		
+			switch (injectionType) {
+
+				case "append":
+					this.$n.appendTo($(injectionLocation));
+					break;
+
+				case "prepend":
+					this.$n.prependTo($(injectionLocation));
+					break;
+
+				case "insertAfter":
+					this.$n.insertAfter($(injectionLocation));
+					break;
+
+				case "insertBefore":
+					this.$n.insertBefore($(injectionLocation));
+					break;
+
 			}
+
 		}
+
+		this.#emptyOverflowNavItem();
 
 		this.inMobileMode = true;
 
@@ -612,15 +664,15 @@ class Gardenburger {
 
 	#deactivateInlineMode () {
 
-		const
-			phStr = `#gb-placeholder-${this.i}`,
-			$placeholder = $(phStr)
-		;
-
 		this.$n.removeClass("compact revealed");
+
 		this.$n.find(".label-chevron-compact input:checked").prop("checked", false);
-		this.$n.insertAfter($placeholder);
-		$placeholder.remove();
+
+		if (this.settings.inlineModeInjectionPoint != "self") {
+			const $placeholder = $(`#gb-placeholder-${this.i}`);
+			this.$n.insertAfter($placeholder);
+			$placeholder.remove();
+		}
 
 		this.inMobileMode = false;
 
@@ -657,6 +709,11 @@ class Gardenburger {
 
 	First-level dropdowns:
 
+	  - .flip is automatically applied to the root element if
+	  	there isn't enough room below the nav but there is enough
+		room above the nav. Then top-level dropdowns become dropups.
+		This is for navs near the bottom fold.
+
 	  - .justify-right: By default first-level dropdowns are
 	  	horizontally aligned on the left edge with their
 		parent. If this causes the dropdown to extend off
@@ -667,9 +724,10 @@ class Gardenburger {
 	Second-and-deeper-level dropdowns:
 
 	  - .flip-h: By default grandchild dropdowns appear to
-	  	the right of its parent dropdown. If this causes the
+	  	the right of their parent dropdowns. If this causes the
 		dropdown to extend off the right edge of the
-		viewport, they are flipped to the left side.
+		viewport, they are flipped to the left side unless there
+		isn't enough room on the left.
 
 	  - .justify-bottom: By default grandchild dropdowns are
 	  	aligned on their top edge with the top of their
@@ -677,14 +735,7 @@ class Gardenburger {
 		room for this in the viewport or if we're .flip-v'd
 		and they would extend over the nav bar, we change
 		the justification to the bottom and they extend
-		upwards.
-
-	There is one more modifier that we expect the user to
-	add manually when necessary. .flip can go on the root
-	element to cause first-level dropdowns to appear above
-	the nav instead of below. This is for footer navs and
-	other navs near the bottom fold.
-	* TODO Make the .flip automatic too if possible
+		upwards (if there's room).
 
 	Note that all of these modifiers affect navigation with
 	the keyboard. (For example, normally the down arrow will
@@ -760,6 +811,37 @@ class Gardenburger {
 				$scope.removeClass("ignoreHoverFocus");
 			}, 100
 		);
+	}
+
+
+
+
+	#vFlipIfNeeded () {
+		if (!this.$n.hasClass("flip")) {
+
+			const $topUL = this.$n.find("ul").first();
+			
+			let farthestBottomPoint = 0;
+			$topUL.find("ul, .nav-dropdown").each(
+				(_ix, el) => {
+					const thisBottomPoint = Math.round($(el).offset().top + $(el).outerHeight());
+					if (thisBottomPoint > farthestBottomPoint) {
+						farthestBottomPoint = thisBottomPoint;
+					}
+				}
+			);
+			const
+				neededSpace = farthestBottomPoint - Math.round($topUL.offset().top + $topUL.outerHeight()),
+				availSpace = Math.floor($topUL.offset().top),
+				docHeight = Math.floor($(document).height())
+			;
+
+			// If insufficient space below and sufficient space above
+			if (farthestBottomPoint >= docHeight && availSpace >= neededSpace) {
+				this.$n.addClass("flip");
+			}
+
+		}
 	}
 
 

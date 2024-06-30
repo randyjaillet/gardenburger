@@ -28,10 +28,26 @@
 			color: white
 			outline: 1px solid currentColor
 
+	.icon-chevron
+		display: none
+
 	> ul
 		max-height: 85vh
 		overflow: scroll
-		transition: transform .3s linear .2s, opacity .3s linear .2s
+
+		> li
+			$countThru: 20
+			$del: 50ms
+			transition-property: transform, opacity
+			transition-duration: .15s
+			transition-timing-function: linear
+			transition-delay: $countThru*$del
+
+			@for $i from 1 through $countThru
+
+				&:nth-child(#{$i})
+					transition-delay: #{$i*$del}
+
 
 	ul,
 	.nav-dropdown
@@ -132,7 +148,7 @@
 	opacity: 0
 	transition: opacity .3s linear, left 0s linear .3s
 
-	> ul
+	> ul > li
 		transform: translateX(-3vw)
 		opacity: 0
 		transition: all .3s linear
