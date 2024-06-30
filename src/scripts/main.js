@@ -175,6 +175,7 @@ class Gardenburger {
 			"a, .nav-item, .label-chevron-compact [type=checkbox]",
 			e => {
 				const
+					self = this,
 					$et = $(e.target),
 					$etLI = $et.closest("#gardenburger-screen li"),
 					$par = $etLI.parents("#gardenburger-screen li").first(),
