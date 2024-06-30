@@ -20,232 +20,235 @@
 		gap: 10px
 
 
-		//
-		// All list items
-		//
+	//
+	// All list items
+	//
 
-		li
-			display: flex
-			flex-direction: column
-			align-items: center
-			justify-content: stretch
-			position: relative
-			transition: all $dur linear
-			gap: 10px
+	li
+		display: flex
+		flex-direction: column
+		align-items: center
+		justify-content: stretch
+		position: relative
+		transition: all $dur linear
+		gap: 10px
 
-			&:focus-within > a,
-			&:hover > a
-				color: inherit
-				background-color: rgba($accent-faded, 10%)
-
-			a:hover,
-			a:focus
-				color: $accent-bright
-				background-color: $accent-faded
-
-			&.supress-indicator-chevron
-
-				.icon-chevron
-					display: none
-
-
-			//
-			// All links
-			//
-
-			a,
-			.nav-item
-				display: flex
-				flex-direction: column
-				flex: 1 1 auto
-				gap: 5px
-				align-items: center
-				justify-content: center
-				position: relative
-				padding: 10px 12px
-				border-radius: 7px
-				color: rgba(white, 70%)
-				transition: all $dur linear
-
-			.nav-item
-				cursor: default
-				color: rgba(white, 40%)
-
-			ul li
-				flex-direction: revert
-
-				a,
-				.nav-item
-					flex-direction: initial
-					justify-content: flex-start
-
-
-			// 
-			// Focus arrow - Zero state
-			// 
-			// This is a literal arrow that shows which
-			// nav item is currently focused with the
-			// keyboard. We only reveal it below on focus; we
-			// don't need it on hover because then we
-			// already have the cursor pointing at it.
-			a,
-			.nav-item
-
-				svg.icon-arrow
-					display: block
-					width: $arrow-size
-					height: $arrow-size
-					position: absolute
-					left: -200vw
-					top: calc(50% - $arrow-size * .5)
-					opacity: 0
-					stroke: $accent-bright
-					transition: height $dur linear, width $dur linear, opacity $dur linear
-
-
-			> a:focus
-				background-color: $accent-faded
-
-
-			//
-			// Focus arrow - Activated
-			//
+		&:focus-within,
+		&:hover
 
 			> a,
 			> .nav-item
+				color: inherit
+				background-color: rgba($accent-faded, 10%)
 
-				&:focus
-
-					svg.icon-arrow
-						left: -$arrow-size*.5
-						opacity: 1
-
-
-			//
-			// Links of list items that have sub-lists
-			//
-
-			svg.icon-chevron
-				height: $chev-size
-				width: $chev-size
-				position: absolute
-				top: calc(100% - $ul-pad)
-				z-index: 104
-				border-radius: 50%
-				stroke: rgba(white, 40%)
-
-			&:has(ul, .nav-dropdown):not(.supress-indicator-chevron)
+		a:hover,
+		a:focus
+			color: $accent-bright
+			background-color: $accent-faded
 
 
-				// 
-				// Surface and deeper dropdown chevrons - Zero state
-				// 
-				// These are chevrons that indicate the presence of
-				// sublists. In their zero state they are within the
-				// parent nav item at its end. (Bottom in the case of
-				// the surface level.)
-				svg.icon-chevron
-					display: block
-					transition: all $dur linear $dur
+	//
+	// All links
+	//
 
+	a,
+	.nav-item
+		display: flex
+		flex-direction: column
+		flex: 1 1 auto
+		gap: 5px
+		align-items: center
+		justify-content: center
+		position: relative
+		padding: 10px 12px
+		border-radius: 7px
+		color: rgba(white, .7)
+		transition: all $dur linear
+		text-wrap: nowrap
 
-			//
-			// Surface and deeper dropdown chevrons - Activated
-			//
-			// Transition the sublist indicator chevron into the
-			// gutter between the parent list and its child below.
-			&:has(ul, .nav-dropdown):not(.supress-indicator-chevron):hover,
-			&:has(ul, .nav-dropdown):not(.supress-indicator-chevron):focus-within
+		a:focus
+			background-color: $accent-faded
 
-				> svg.icon-chevron
-					// transform: translateY($root-pad)
-					stroke: $accent
-					top: 100%
-					stroke-width: 2px
+	.nav-item
+		cursor: default
+		color: rgba(white, .7)
 
-			&:has(ul, .nav-dropdown):not(.supress-indicator-chevron):focus-within
+	ul li
+		flex-direction: revert
 
-				> svg.icon-chevron
-					transition: all $dur linear
+		a,
+		.nav-item
+			flex-direction: initial
+			justify-content: flex-start
 
+		//
+		// Child and deeper lists - zero state
+		//
 
-			//
-			// Child and deeper lists - zero state
-			//
-
-			ul,
-			.nav-dropdown
-				width: max-content
-				max-width: 300px
-				padding: $ul-pad
-				background-color: #333943
-				border-radius: 10px
-				background-image: linear-gradient(rgba(white, 7%), rgba(black, 7%))
-				box-shadow: inset 0 1px 0 rgba(white, .1), 0 1px 2px rgba(black, .2)
+		ul,
+		.nav-dropdown
+			width: max-content
+			max-width: 300px
+			padding: $ul-pad
+			background-color: #333943
+			border-radius: 10px
+			background-image: linear-gradient(rgba(white, 7%), rgba(black, 7%))
+			box-shadow: inset 0 1px 0 rgba(white, .1), 0 1px 2px rgba(black, .2)
 
 
 			//
 			// Child and deeper list items - zero state
 			//
 
-			ul li:has(ul, .nav-dropdown)
+			li:has(ul, .nav-dropdown) >
 
 				a,
 				.nav-item
 					padding-right: (12px + $chev-size - $ul-pad * .5)
 
 
-				//
-				// Child and deeper dropdown chevrons - Zero state
-				//
-				// At this level the dropdown chevron is
-				// oriented horizontally to point at the
-				// grandchild list to the side. It's not activated
-				// yet so it's in the list item, not the gutter.
-				> svg.icon-chevron
-					left: calc(100% - $chev-size)
-					top: calc(50% - $chev-size*.5)
-
-				&:has(> .flip-h)
-
-					> svg.icon-chevron
-						transform: scaleX(-1)
-						left: unset
-						right: calc(100% - 10px)
 
 
-				> a,
-				> .nav-item
+
+	// SECTION Iconography
+
+.gardenburger:not(.compact),
+#gardenburger-screen
+
+	// SECTION Focus arrows
+
+	// ANCHOR Base
+
+	.icon-arrow
+		display: block
+		width: $arrow-size
+		height: $arrow-size
+		position: absolute
+		left: -200vw
+		top: calc(50% - $arrow-size * .5)
+		opacity: 0
+		stroke: $accent-bright
+		transition: height $dur linear, width $dur linear, opacity $dur linear
+
+	
+	// ANCHOR Activated
+
+	a,
+	.nav-item
+
+		&:focus
+
+			> .icon-arrow
+				left: -$arrow-size*.5
+				opacity: 1
+
+	// !SECTION
+
+.gardenburger
+
+	// SECTION Chevrons
+	// SECTION All levels
+	// ANCHOR Base (hidden)
+
+	.icon-chevron
+		height: $chev-size
+		width: $chev-size
+		position: absolute
+		top: calc(100% - $ul-pad)
+		left: calc(50% - $chev-size*.5)
+		z-index: 99
+		border-radius: 50%
+		stroke: rgba(white, 40%)
+		transition: all $dur linear $dur
+		display: none
 
 
-					//
-					// Child and deeper lists - focus state (parent)
-					//
-					
-					&:focus
+	// ANCHOR Activated (shifted)
+
+	li:has(ul, .nav-dropdown):not(.supress-indicator-chevron)
+
+		&:hover,
+		&:focus-within
+
+			> .icon-chevron
+				stroke: $accent
+				top: 100%
+				stroke-width: 2px
+
+		&:focus-within
+
+			> .icon-chevron
+				transition: all $dur linear
 
 
-						//
-						// Child and deeper focus arrows - Active state
-						//
+	// SECTION Vertically flipped
+	
+	// ANCHOR Zero
 
-						svg.icon-arrow
-							opacity: 1
+	&.flip li:has(ul, .nav-dropdown):not(.supress-indicator-chevron, .gardenburger li li)
+	
+		> .icon-chevron
+			top: unset
+			bottom: calc(100% - $ul-pad*.5)
+			transform: scaleY(-1)
 
-				//
-				// Child and deeper dropdown chevrons - Activated
-				//
-				// Transition the sublist indicator chevron into the
-				// gutter between the parent list and its child to the side.
-				&:has(ul, .nav-dropdown):not(.supress-indicator-chevron):hover,
-				&:has(ul, .nav-dropdown):not(.supress-indicator-chevron):focus-within
+	
+	// ANCHOR Activated
 
-					> svg.icon-chevron
-						top: calc(50% - $chev-size*.5)
-						// left: calc(100% + $ul-pad + $chev-gutter)
-						transform: translateX($ul-pad + $chev-size + $chev-gutter)
+	&.flip li:has(ul, .nav-dropdown):not(.supress-indicator-chevron, .gardenburger li li)
 
-					&:has(> .flip-h)
+		&:hover,
+		&:focus-within
 
-						svg.icon-chevron
-							transform: scaleX(-1) translateX($ul-pad + $chev-gutter + 10px)
+			> .icon-chevron
+				top: unset
+				bottom: 100%
+
+	// !SECTION
+	// !SECTION
+
+	// SECTION Second and deeper
+	
+	// ANCHOR Zero
+
+	li ul
+	
+		li
+		
+			> .icon-chevron-rt
+				left: calc(100% - $chev-size)
+				top: calc(50% - $chev-size*.5)
+
+			&:has(> .flip-h)
+
+				> .icon-chevron
+					transform: scaleX(-1)
+					left: unset
+					right: calc(100% - 10px)
+
+		
+		// ANCHOR Activated
+		
+		li:has(ul, .nav-dropdown):not(.supress-indicator-chevron):hover,
+		li:has(ul, .nav-dropdown):not(.supress-indicator-chevron):focus-within
+
+			> .icon-chevron
+				top: calc(50% - $chev-size*.5)
+				transform: translateX($ul-pad + $chev-size + $chev-gutter)
+
+			&:has(> .flip-h)
+
+				> .icon-chevron
+					transform: scaleX(-1) translateX($ul-pad + $chev-gutter + 10px)
+
+	// !SECTION
+
+	// SECTION Visibility
+
+	li:has(ul, .nav-dropdown):not(.supress-indicator-chevron, li li) > .icon-chevron-dn,
+	li ul li:has(ul, .nav-dropdown) > .icon-chevron-rt
+		display: block
+
+	// !SECTION
+
+	// !SECTION

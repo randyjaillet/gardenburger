@@ -1,4 +1,4 @@
-nav(class="gardenburger" data-gardenburger="#gardenburger-button")
+nav(class="gardenburger" data-gardenburger="#gardenburger-button1" data-gardenburger-mobile-injection-type="prepend" data-gardenburger-mobile-injection-location="body > main")
 	ul
 		li
 			a(href="#")
@@ -51,7 +51,20 @@ nav(class="gardenburger" data-gardenburger="#gardenburger-button")
 						li: a(href="#") Jim
 						li: a(href="#") Emily
 						li: a(href="#") Stacy
-						li: a(href="#") Montgomery Bartholomew III
+						li
+							a(href="#") Montgomery Bartholomew III
+							ul
+								li: a(href="#") Background
+								li
+									a(href="#") Education
+									ul
+										li
+											a(href="#") Submenu item
+										li
+											a(href="#") Submenu item
+										li
+											a(href="#") Submenu item
+								li: a(href="#") Expertise
 		li
 			a(href="#")
 				svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-theater")
@@ -117,7 +130,10 @@ nav(class="gardenburger" data-gardenburger="#gardenburger-button")
 							path(d="M7 18a6 6 0 0 0 3.84-10.61")
 						| Pigeon
 					ul
-						li: a(href="#") Slow ($10)
+						li
+							a(href="#") Slow ($10)
+							ul
+								li: a(href="#") Steroid add-on ($5)
 						li: a(href="#") Express(ly slow) ($5)
 						li: a(href="#") Slowest (FREE)
 				li: a(href="#")
@@ -126,15 +142,15 @@ nav(class="gardenburger" data-gardenburger="#gardenburger-button")
 						path(d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3")
 						path(d="M12 17h.01")
 					| Whatever Twitter is called today
-		li(class="supress-indicator-chevron")
+		li(class="supress-indicator-chevron" data-gardenburger-supress-overflow data-gardenburger-mobile-always-revealed data-gardenburger-requires-click)
 			a(href="#")
 				svg(xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search")
 					circle(cx="11" cy="11" r="8")
 					path(d="m21 21-4.3-4.3")
-			form(class="nav-dropdown" id="search")
-				div(id="search-wrap")
-					input(type="search" id="search-input" placeholder="Search site")
-					button(id="search-submit")
+			form(class="nav-dropdown" id="search" class="search")
+				div(class="search-wrap")
+					input(type="search" class="search-input" placeholder="Search site")
+					button(class="search-submit")
 						svg(xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right")
 							path(d="M5 12h14")
 							path(d="m12 5 7 7-7 7")

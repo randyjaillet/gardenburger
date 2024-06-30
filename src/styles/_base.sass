@@ -5,9 +5,13 @@
 	box-sizing: border-box
 
 
+:is(.forceAllOpen, .ignoreHoverFocus) :is(ul, .nav-dropdown)
+	transition: unset !important
+
+
 .gardenburger:not(.compact)
 
-	.icon-chevron-compact-label
+	.label-chevron-compact
 		display: none
 
 
@@ -45,30 +49,28 @@
 			.nav-dropdown
 				position: absolute
 				left: -200vw
+				z-index: 100
 				opacity: 0
 				flex-direction: column
 				align-items: stretch
-				transition: opacity $dur linear $dur, transform $dur linear $dur, left 0s linear $dur*2, right 0s linear $dur*2
+				transition: opacity $dur linear $dur*2, transform $dur linear $dur*2, left 0s linear $dur*3, right 0s linear $dur*3
 
 				&.justify-right
 					left: unset
 					right: 200vw
-
-				&.flip-v
-					top: unset
-					bottom: calc(100% + $ul-pad + $root-pad)
 
 
 			//
 			// Child and deeper lists - active state (parent)
 			//
 
-			&:has(ul, .nav-dropdown):focus-within,
-			&:has(ul, .nav-dropdown):hover
+			@at-root .gardenburger:not(.compact) .forceAllOpen,
+			&:has(ul, .nav-dropdown):focus-within >,
+			&:has(ul, .nav-dropdown):not([data-gardenburger-requires-click]):hover >
 
-				> ul,
-				> .nav-dropdown
-					opacity: 1
+				ul,
+				.nav-dropdown
+					opacity: 1 !important
 
 
 			//
@@ -78,10 +80,10 @@
 			// the transitions without a delay because it's
 			// less important to confirm intent. Plus people
 			// who use tab to navigate are probably SPEEDY.
-			&:focus-within
+			&:focus-within >
 
-				> ul,
-				> .nav-dropdown
+				ul,
+				.nav-dropdown
 					transition: opacity $dur linear, transform $dur linear
 
 
@@ -92,7 +94,7 @@
 			// the transitions as a "hover intent" feature
 			// so it doesn't flash submenus when you move
 			// the cursor quickly over the list items.
-			&:hover
+			&:not([data-gardenburger-requires-click]):hover
 
 				> ul,
 				> .nav-dropdown
@@ -120,15 +122,18 @@
 					// so the submenu's first item is in line with the
 					// parent item. We have to shift it to compensate
 					// for the UL's padding.
-					ul,
-					.nav-dropdown
+					> ul,
+					> .nav-dropdown
 						top: -$ul-pad
-						// transform: translateX(-5px)
 
 						&.flip-h
 							left: unset
 							right: 200vw
 							transition: opacity $dur linear $dur, right 0s linear $dur*2
+
+						&.justify-bottom
+							top: unset
+							bottom: -$ul-pad
 
 
 					//
@@ -136,18 +141,18 @@
 					//
 
 					// Move the horizontally-appearing list into view
-					&:focus-within,
-					&:hover
+					@at-root
+						.gardenburger:not(.compact) .forceAllOpen :is(ul, .nav-dropdown) li >,
+						.gardenburger:not(.compact) :is(ul, .nav-dropdown) li :is(ul, .nav-dropdown) li:not(.ignoreHoverFocus *):focus-within >,
+						.gardenburger:not(.compact) :is(ul, .nav-dropdown) li :is(ul, .nav-dropdown) li:not(.ignoreHoverFocus *):hover >
 
-						> ul,
-						> .nav-dropdown
-							left: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
-							// transform: translateX(0)
+							ul,
+							.nav-dropdown
+								left: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
 
-							&.flip-h
-								right: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
-
-							// &.flip-v
+								&.flip-h
+									left: unset
+									right: calc(100% + $ul-pad + $chev-size + $chev-gutter * 2)
 
 
 
@@ -176,9 +181,8 @@
 			// with a gutter for the indicator chevron.
 			> ul,
 			> .nav-dropdown
-				// top: calc(100% + $root-pad + $chev-size + $chev-gutter*2)
 				top: calc(100% + $chev-size + $chev-gutter*2)
-				transform: translateY(-5px)
+				// transform: translateY(-5px)
 
 
 			//
@@ -186,14 +190,22 @@
 			//
 
 			// Move the vertically-appearing list into view
-			&:focus-within,
-			&:hover
+			@at-root .gardenburger:not(.compact) .forceAllOpen,
+			&:focus-within >,
+			&:not([data-gardenburger-requires-click]):hover >
 
-				> ul,
-				> .nav-dropdown
+				ul,
+				.nav-dropdown
 					left: 0
-					transform: translateY(0)
+					// transform: translateY(0)
 
 					&.justify-right
 						left: unset
 						right: 0
+
+
+	&.flip
+
+		ul :is(ul, .nav-dropdown):not(.gardenburger ul :is(ul, .nav-dropdown) :is(ul, .nav-dropdown))
+			top: unset
+			bottom: calc(100% + $ul-pad + $root-pad)

@@ -1,0 +1,138 @@
+#gardenburger-screen
+	display: flex
+	justify-content: center
+	align-items: center
+	height: 100vh
+	width: 100vw
+	padding: 0 5vw
+	position: fixed
+	top: 0
+	left: 0
+	z-index: 120
+	background-color: rgba(black, .65)
+	font-size: 150%
+	transition: opacity .3s linear
+
+	.gardenburger-screen-ex
+		display: flex
+		position: absolute
+		top: 30px
+		right: 30px
+		cursor: pointer
+		border-radius: 50%
+		outline: 1px solid transparent
+		transition: all .2s linear
+
+		&:hover,
+		&:focus
+			color: white
+			outline: 1px solid currentColor
+
+	> ul
+		max-height: 85vh
+		overflow: scroll
+		transition: transform .3s linear .2s, opacity .3s linear .2s
+
+	ul,
+	.nav-dropdown
+		flex: 1 1 100%
+		display: flex
+		flex-direction: column
+		gap: 2px
+		list-style: none
+		padding: 0
+
+		ul,
+		.nav-dropdown
+			margin-top: 2px
+			padding-left: 5vw
+			font-size: 85%
+
+	li
+		display: flex
+		align-items: stretch
+		flex-wrap: wrap
+		list-style: none
+
+	a,
+	.nav-item
+		display: inline-flex
+		align-items: center
+		gap: 10px
+		margin: 0 0 0 .85em
+		padding: .5em .75em
+		position: relative
+		border-radius: 5px
+		color: rgba(white, .8)
+
+		svg,
+		.icon-arrow
+			height: 1em
+			width: 1em
+
+		.icon-arrow
+			top: calc(50% - 1em / 2)
+
+		&:hover,
+		&:focus
+			background-color: $accent-faded
+	
+		&:focus
+			margin-left: 0
+			padding-left: 1.6em
+
+			> .icon-arrow
+				left: .2em
+				stroke: currentColor
+
+	// Only show the sublist if the chevron is toggled or
+	// focus is within the sublist.
+	li:has(> label > input:not(:checked)):not([data-gardenburger-mobile-always-revealed]) > :is(ul, .nav-dropdown):not(:focus-within)
+		height: 0
+		overflow: hidden
+		margin: 0
+		padding: 0
+
+	.label-chevron-compact
+		$chev-size: 1em
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		margin-left: 2px
+		padding: .5em
+		border-radius: 5px
+		cursor: pointer
+
+		svg
+			width: $chev-size
+			height: $chev-size
+			transition: transform $dur linear
+
+		input
+			position: absolute
+			left: -200vw
+
+		input:checked ~ svg
+			transform: scaleY(-100%)
+			
+		&:hover,
+		&:has(input:focus)
+			// box-shadow: inset 0 0 0 1px $accent
+			background-color: $accent-faded
+
+	li:is([data-gardenburger-mobile-always-revealed]) >
+
+		a,
+		.nav-item,
+		.label-chevron-compact
+			display: none
+
+#gardenburger-screen.hidden
+	left: -300vw
+	opacity: 0
+	transition: opacity .3s linear, left 0s linear .3s
+
+	> ul
+		transform: translateX(-3vw)
+		opacity: 0
+		transition: all .3s linear
